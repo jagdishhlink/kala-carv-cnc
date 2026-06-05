@@ -6,19 +6,19 @@ import { usePathname } from 'next/navigation'
 import { HiOutlinePhone, HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2'
 
 export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 
   const navigation = [
-    { label: 'Home', href: '/' },
-    { label: 'Products', href: '/products' },
-    { label: 'Workshops', href: '/workshops' },
-    { label: 'About', href: '/about' },
-    { label: 'Visit Us', href: '/locations' },
-    { label: 'Contact', href: '/contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Materials', href: '/products' },
+    { name: 'Gallery', href: '/gallery' },
+    { name: 'Workshop', href: '/about' },
+    { name: 'Visit Us', href: '/locations' },
+    { name: 'Contact', href: '/contact' },
   ]
 
-  const isActiveLink = (href) => {
+  const isActive = (href) => {
     if (href === '/') {
       return pathname === '/'
     }
@@ -26,18 +26,14 @@ export default function Header() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F4E6D7] shadow-lg shadow-black/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#E53E3E] border-b border-red-700/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 group">
-            <div className="flex flex-col">
-              <span className="text-xl lg:text-2xl font-bold text-[#2C5530] tracking-tight">
-                Kala Carv
-              </span>
-              <span className="text-xs lg:text-sm font-medium text-[#E67E22] -mt-1">
-                CNC PRECISION
-              </span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="flex items-center">
+              <span className="text-xl lg:text-2xl font-bold text-gray-900">Kala Carv</span>
+              <span className="text-lg lg:text-xl font-semibold text-[#F7931E] ml-2">CNC</span>
             </div>
           </Link>
 
@@ -45,15 +41,15 @@ export default function Header() {
           <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  isActiveLink(item.href)
-                    ? 'bg-[#2C5530] text-white shadow-md'
-                    : 'text-gray-800 hover:bg-[#2C5530]/10 hover:text-[#2C5530]'
+                  isActive(item.href)
+                    ? 'bg-[#2D3748] text-white shadow-lg'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
               >
-                {item.label}
+                {item.name}
               </Link>
             ))}
           </nav>
@@ -61,26 +57,27 @@ export default function Header() {
           {/* Desktop Contact & CTA */}
           <div className="hidden lg:flex items-center space-x-4">
             <a
-              href="tel:09586660214"
-              className="flex items-center text-sm font-medium text-gray-800 hover:text-[#2C5530] transition-colors"
+              href="tel:095866 60214"
+              className="flex items-center space-x-2 text-white/90 hover:text-white transition-colors"
             >
-              <HiOutlinePhone className="w-4 h-4 mr-2" />
-              095866 60214
+              <HiOutlinePhone className="w-4 h-4" />
+              <span className="text-sm font-medium">095866 60214</span>
             </a>
             <Link
               href="/contact"
-              className="bg-[#2C5530] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#E67E22] transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="bg-[#2D3748] hover:bg-[#2D3748]/90 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
             >
-              Get Quote
+              Get Custom Quote Today
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile menu button */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-gray-800 hover:bg-[#2C5530]/10 hover:text-[#2C5530] transition-colors"
+            type="button"
+            className="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {isMobileMenuOpen ? (
+            {mobileMenuOpen ? (
               <HiOutlineXMark className="w-6 h-6" />
             ) : (
               <HiOutlineBars3 className="w-6 h-6" />
@@ -89,48 +86,46 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu Panel */}
-      <div
-        className={`lg:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen
-            ? 'max-h-screen opacity-100 visible'
-            : 'max-h-0 opacity-0 invisible'
-        }`}
-      >
-        <div className="bg-[#F4E6D7] border-t border-[#2C5530]/10 px-4 py-4 shadow-xl">
-          <nav className="flex flex-col space-y-1">
+      {/* Mobile menu */}
+      <div className={`lg:hidden transition-all duration-300 ease-in-out ${
+        mobileMenuOpen 
+          ? 'max-h-96 opacity-100' 
+          : 'max-h-0 opacity-0 overflow-hidden'
+      }`}>
+        <div className="bg-[#E53E3E] border-t border-red-700/20">
+          <div className="px-4 py-4 space-y-2">
             {navigation.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
-                  isActiveLink(item.href)
-                    ? 'bg-[#2C5530] text-white shadow-md'
-                    : 'text-gray-800 hover:bg-[#2C5530]/10 hover:text-[#2C5530]'
+                className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActive(item.href)
+                    ? 'bg-[#2D3748] text-gray-900'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
+                onClick={() => setMobileMenuOpen(false)}
               >
-                {item.label}
+                {item.name}
               </Link>
             ))}
-          </nav>
-
-          {/* Mobile Contact & CTA */}
-          <div className="mt-6 pt-4 border-t border-[#2C5530]/10 space-y-3">
-            <a
-              href="tel:09586660214"
-              className="flex items-center justify-center w-full px-4 py-3 bg-white rounded-lg text-gray-800 hover:bg-gray-50 transition-colors border border-[#2C5530]/20"
-            >
-              <HiOutlinePhone className="w-5 h-5 mr-2 text-[#2C5530]" />
-              <span className="font-medium">095866 60214</span>
-            </a>
-            <Link
-              href="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block w-full text-center bg-[#2C5530] text-white px-4 py-3 rounded-lg font-medium hover:bg-[#E67E22] transition-all duration-200 shadow-md"
-            >
-              Get Your Custom Cut Quote
-            </Link>
+            
+            {/* Mobile Contact */}
+            <div className="pt-4 border-t border-red-700/20 space-y-3">
+              <a
+                href="tel:095866 60214"
+                className="flex items-center space-x-2 px-4 py-3 text-white/90 hover:text-white transition-colors"
+              >
+                <HiOutlinePhone className="w-4 h-4" />
+                <span className="text-sm font-medium">095866 60214</span>
+              </a>
+              <Link
+                href="/contact"
+                className="block bg-[#2D3748] hover:bg-[#2D3748]/90 text-white px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 text-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Get Custom Quote Today
+              </Link>
+            </div>
           </div>
         </div>
       </div>

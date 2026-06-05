@@ -1,620 +1,581 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { HiOutlinePhone, HiOutlineMapPin, HiOutlineClock, HiOutlineArrowRight, HiOutlineCheckCircle, HiOutlineBolt, HiOutlineShieldCheck, HiOutlineStar, HiOutlineSparkles } from 'react-icons/hi2'
+import { HiOutlinePhone, HiOutlineMapPin, HiOutlineClock, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlineChevronRight, HiOutlineBolt, HiOutlineWrench, HiOutlineShieldCheck, HiOutlineUserGroup, HiOutlineBuildingStorefront, HiOutlineSparkles, HiOutlineHeart, HiOutlineChevronDown } from 'react-icons/hi2'
 
 export default function HomePage() {
+  const [activeProcess, setActiveProcess] = useState(0)
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+
+  const processSteps = [
+    { title: 'Design Upload', desc: 'Submit your creative vision' },
+    { title: 'Material Selection', desc: 'Choose from premium materials' },
+    { title: 'CNC Precision Cutting', desc: 'Advanced machinery creates perfection' },
+    { title: 'Quality Inspection', desc: 'Every piece meets our standards' },
+    { title: 'Finished Creation', desc: 'Your vision becomes reality' }
+  ]
+
+  const materialCategories = [
+    { name: 'Wood & MDF', count: '50+ types', image: '/images/business-3.jpg' },
+    { name: 'Acrylic Sheets', count: '30+ colors', image: '/images/business-2.jpg' },
+    { name: 'Metal Cutting', count: '15+ alloys', image: '/images/business-9.jpg' },
+    { name: 'Custom Projects', count: 'unlimited', image: '/images/business-8.jpg' }
+  ]
+
+  const precisionValues = [
+    { icon: HiOutlineBolt, title: 'Lightning Precision', stat: '±0.1mm accuracy' },
+    { icon: HiOutlineWrench, title: 'Advanced Technology', stat: 'CNC-grade equipment' },
+    { icon: HiOutlineShieldCheck, title: 'Quality Assured', stat: '100% inspection' },
+    { icon: HiOutlineUserGroup, title: 'Expert Craftsmen', stat: '10+ years experience' }
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveProcess((prev) => (prev + 1) % processSteps.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <main className="min-h-screen">
-      {/* Diagonal Split Hero */}
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#F4E6D7] via-gray-100 to-white">
-        {/* Geometric Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#2C5530]/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-1/4 w-80 h-80 bg-[#E67E22]/10 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-white">
+      {/* Split Diagonal Hero */}
+      <section className="relative min-h-screen overflow-hidden">
+        {/* Background gradient blobs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-[#F7931E]/20 to-[#E53E3E]/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-tl from-[#2D3748]/20 to-[#F7931E]/10 rounded-full blur-3xl"></div>
         </div>
-        
-        {/* Diagonal Split Layout */}
-        <div className="relative z-10 min-h-screen flex">
-          {/* Left Side - Content */}
-          <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
-            <div className="max-w-2xl">
-              {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 mb-8 animate-pulse">
-                <HiOutlineShieldCheck className="w-5 h-5 text-[#2C5530]" />
-                <span className="text-sm font-medium text-gray-800">Professional CNC Equipment</span>
-              </div>
 
-              <h1 className="text-6xl lg:text-8xl font-bold text-gray-900 leading-none mb-6">
-                Precision
-                <span className="block text-[#2C5530] italic">CNC Cutting</span>
-                <span className="block text-3xl lg:text-4xl font-normal text-gray-600">for Crafters</span>
+        <div className="relative min-h-screen flex">
+          {/* Left diagonal section - Content */}
+          <div className="flex-1 flex items-center justify-start pl-8 lg:pl-16 xl:pl-24 py-20" style={{clipPath: 'polygon(0 0, 70% 0, 60% 100%, 0 100%)'}}>
+            <div className="max-w-2xl z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-[#F7931E]/20 backdrop-blur-xl border border-[#F7931E]/30 rounded-full px-4 py-2 animate-pulse">
+                  <span className="text-[#2D3748] font-semibold text-sm">4.3★ Rated in Ahmedabad</span>
+                </div>
+              </div>
+              
+              <h1 className="text-6xl xl:text-7xl font-bold text-[#2D3748] leading-tight mb-6">
+                Precision CNC
+                <span className="block text-[#E53E3E]">Cutting for</span>
+                <span className="block bg-gradient-to-r from-[#F7931E] to-[#E53E3E] bg-clip-text text-transparent">
+                  Scrapbookers
+                </span>
               </h1>
-
-              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                Transform your scrapbooking ideas into perfectly cut reality with our professional CNC services in Ahmedabad.
+              
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Transform your memories into beautiful keepsakes with our custom CNC-cut scrapbooking supplies and personalized designs in Ahmedabad.
               </p>
-
-              {/* Trust Indicators */}
-              <div className="flex flex-wrap gap-4 mb-10">
-                <div className="flex items-center gap-2 bg-white/60 rounded-lg px-4 py-2">
-                  <HiOutlineStar className="w-4 h-4 text-[#E67E22]" />
-                  <span className="text-sm font-medium">4.3★ Rating</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/60 rounded-lg px-4 py-2">
-                  <HiOutlineClock className="w-4 h-4 text-[#2C5530]" />
-                  <span className="text-sm font-medium">Quick Turnaround</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/60 rounded-lg px-4 py-2">
-                  <HiOutlineMapPin className="w-4 h-4 text-[#2C5530]" />
-                  <span className="text-sm font-medium">Ahmedabad Based</span>
-                </div>
-              </div>
-
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[#2C5530] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#2C5530]/90 transition-all duration-300 group flex items-center justify-center gap-2">
-                  Get Your Custom Cut Quote
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <button className="bg-[#2D3748] text-gray-900 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#2D3748]/90 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#2D3748]/20 flex items-center gap-2 group">
+                  Get Custom Quote Today
                   <HiOutlineArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="border-2 border-[#2C5530] text-[#2C5530] px-8 py-4 rounded-lg font-semibold hover:bg-[#2C5530] hover:text-white transition-all duration-300 flex items-center justify-center gap-2">
-                  <HiOutlinePhone className="w-5 h-5" />
-                  Call for Design Consultation
+                <button className="border-2 border-[#F7931E] text-[#F7931E] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#F7931E] hover:text-white transition-all duration-300 hover:scale-105">
+                  View Our Gallery
                 </button>
               </div>
 
-              {/* Contact Info */}
-              <div className="mt-8 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <HiOutlinePhone className="w-4 h-4" />
-                  <span>095866 60214</span>
+              {/* Trust indicators */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#2D3748]">±0.1mm</div>
+                  <div className="text-sm text-gray-500">Precision</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#2D3748]">2-3 Days</div>
+                  <div className="text-sm text-gray-500">Turnaround</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#2D3748]">100+</div>
+                  <div className="text-sm text-gray-500">Materials</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-[#2D3748]">Open</div>
+                  <div className="text-sm text-gray-500">Until 7 PM</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Side - Diagonal Image */}
-          <div className="flex-1 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#2C5530]/10"></div>
-            <div className="h-full w-full transform skew-x-6 origin-top-left bg-gradient-to-br from-gray-200 to-white">
+          {/* Right diagonal section - Image */}
+          <div className="flex-1 relative" style={{clipPath: 'polygon(10% 0, 100% 0, 100% 100%, 0% 100%)'}}>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#E53E3E]/5 to-[#2D3748]/5">
               <Image
                 src="/images/business-1.jpg"
-                alt="CNC machine cutting intricate paper patterns close up"
+                alt="CNC machine cutting intricate wooden design close up"
                 fill
-                className="object-cover transform -skew-x-6 scale-110"
+                className="object-cover"
                 unoptimized
               />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white/20"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Floating Product Showcase */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-40 left-10 w-72 h-72 bg-[#E67E22]/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#F4E6D7]/30 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-8 relative z-10">
-          {/* Section Header */}
+      {/* Floating Material Showcase */}
+      <section className="py-32 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F7931E]/5 to-[#E53E3E]/5"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Precision Meets
-              <span className="block text-[#2C5530]">Creativity</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We offer precision CNC cutting services tailored specifically for scrapbooking enthusiasts and craft professionals. From intricate patterns to custom designs, we bring your creative visions to life with industrial precision.
+            <h2 className="text-5xl font-bold text-[#2D3748] mb-6">Premium Materials Available</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              From woods to acrylics, we cut with precision across a vast range of materials perfect for your scrapbooking projects
             </p>
           </div>
 
-          {/* Floating Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Card 1 - Floating Left */}
-            <div className="lg:transform lg:translate-y-16 group">
-              <div className="bg-white rounded-2xl shadow-2xl shadow-[#2C5530]/10 overflow-hidden border border-gray-100 hover:shadow-3xl hover:shadow-[#2C5530]/20 transition-all duration-500 group-hover:scale-105">
-                <div className="relative h-64 bg-gradient-to-br from-[#F4E6D7] to-gray-100">
+          {/* Floating cards with asymmetric positioning */}
+          <div className="relative h-[600px]">
+            {/* Large featured card */}
+            <div className="absolute top-0 left-1/4 w-80 h-96 group">
+              <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105 overflow-hidden h-full">
+                <div className="relative h-48 bg-gradient-to-br from-[#E53E3E]/10 to-[#F7931E]/10">
                   <Image
                     src="/images/business-2.jpg"
-                    alt="Colorful scrapbooking paper sheets arranged in geometric patterns"
+                    alt="Colorful acrylic sheets stacked in organized display"
                     fill
                     className="object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Premium Materials</h3>
-                  <p className="text-gray-600 mb-6">Professional-grade cardstock, specialty papers, and craft materials designed for precision cutting.</p>
-                  <div className="flex items-center text-[#2C5530] font-semibold group-hover:translate-x-2 transition-transform">
-                    <span>Explore Materials</span>
-                    <HiOutlineArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 - Center */}
-            <div className="group">
-              <div className="bg-white rounded-2xl shadow-2xl shadow-[#E67E22]/10 overflow-hidden border border-gray-100 hover:shadow-3xl hover:shadow-[#E67E22]/20 transition-all duration-500 group-hover:scale-105">
-                <div className="relative h-64 bg-gradient-to-br from-[#F4E6D7] to-gray-100">
-                  <Image
-                    src="/images/business-5.jpg"
-                    alt="Detailed macro shot of paper cutting blade and materials"
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Precision Tools</h3>
-                  <p className="text-gray-600 mb-6">State-of-the-art CNC machines and cutting tools that deliver microscopic precision for intricate designs.</p>
-                  <div className="flex items-center text-[#E67E22] font-semibold group-hover:translate-x-2 transition-transform">
-                    <span>View Equipment</span>
-                    <HiOutlineArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3 - Floating Right */}
-            <div className="lg:transform lg:translate-y-8 group">
-              <div className="bg-white rounded-2xl shadow-2xl shadow-[#2C5530]/10 overflow-hidden border border-gray-100 hover:shadow-3xl hover:shadow-[#2C5530]/20 transition-all duration-500 group-hover:scale-105">
-                <div className="relative h-64 bg-gradient-to-br from-[#F4E6D7] to-gray-100">
-                  <Image
-                    src="/images/business-6.jpg"
-                    alt="Scrapbook page with laser cut elements and embellishments"
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Custom Designs</h3>
-                  <p className="text-gray-600 mb-6">Bring your unique visions to life with personalized cutting services and design consultation.</p>
-                  <div className="flex items-center text-[#2C5530] font-semibold group-hover:translate-x-2 transition-transform">
-                    <span>Start Project</span>
-                    <HiOutlineArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Trust Signals Row */}
-          <div className="mt-20 grid grid-cols-2 lg:grid-cols-5 gap-8">
-            <div className="text-center">
-              <div className="bg-[#F4E6D7] rounded-2xl p-6 mb-4">
-                <HiOutlineCheckCircle className="w-8 h-8 text-[#2C5530] mx-auto" />
-              </div>
-              <h4 className="font-semibold text-gray-900">Precision CNC cutting for intricate scrapbooking designs</h4>
-            </div>
-            <div className="text-center">
-              <div className="bg-[#F4E6D7] rounded-2xl p-6 mb-4">
-                <HiOutlineSparkles className="w-8 h-8 text-[#2C5530] mx-auto" />
-              </div>
-              <h4 className="font-semibold text-gray-900">Custom cutting services for unique crafting projects</h4>
-            </div>
-            <div className="text-center">
-              <div className="bg-[#F4E6D7] rounded-2xl p-6 mb-4">
-                <HiOutlineShieldCheck className="w-8 h-8 text-[#2C5530] mx-auto" />
-              </div>
-              <h4 className="font-semibold text-gray-900">Professional-grade equipment for detailed work</h4>
-            </div>
-            <div className="text-center">
-              <div className="bg-[#F4E6D7] rounded-2xl p-6 mb-4">
-                <HiOutlineMapPin className="w-8 h-8 text-[#2C5530] mx-auto" />
-              </div>
-              <h4 className="font-semibold text-gray-900">Local Ahmedabad crafting community specialist</h4>
-            </div>
-            <div className="text-center">
-              <div className="bg-[#F4E6D7] rounded-2xl p-6 mb-4">
-                <HiOutlineBolt className="w-8 h-8 text-[#2C5530] mx-auto" />
-              </div>
-              <h4 className="font-semibold text-gray-900">Quick turnaround for personalized designs</h4>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Precision Grid Categories */}
-      <section className="py-32 bg-[#F4E6D7] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8">
-          {/* Grid Header */}
-          <div className="mb-20">
-            <h2 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-8">
-              Craft Categories
-            </h2>
-            <div className="grid lg:grid-cols-2 gap-8 items-end">
-              <p className="text-xl text-gray-700 leading-relaxed">
-                Explore our precision-organized product categories, each designed with the meticulous attention to detail that defines our CNC approach.
-              </p>
-              <div className="text-right">
-                <button className="bg-[#2C5530] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#2C5530]/90 transition-all duration-300 inline-flex items-center gap-2">
-                  View All Products
-                  <HiOutlineArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Modular Grid */}
-          <div className="grid grid-cols-12 gap-6 h-[800px]">
-            {/* Large Feature Card */}
-            <div className="col-span-12 lg:col-span-8 row-span-2 bg-white rounded-3xl overflow-hidden shadow-2xl group hover:shadow-3xl transition-all duration-500">
-              <div className="relative h-full bg-gradient-to-br from-gray-100 to-white">
-                <Image
-                  src="/images/business-4.jpg"
-                  alt="Modern industrial workshop with organized craft supplies"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  unoptimized
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <h3 className="text-4xl font-bold text-white mb-4">CNC Services</h3>
-                  <p className="text-white/90 text-lg mb-6">Professional cutting services with industrial precision</p>
-                  <button className="bg-white text-[#2C5530] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                    Book Service
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Stacked Cards */}
-            <div className="col-span-12 lg:col-span-4 flex flex-col gap-6 h-full">
-              {/* Paper & Cardstock */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all duration-500 flex-1">
-                <div className="relative h-32 bg-gradient-to-br from-[#E67E22]/20 to-[#2C5530]/20">
-                  <Image
-                    src="/images/business-8.jpg"
-                    alt="Organized craft storage with labeled compartments and tools"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     unoptimized
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Paper & Cardstock</h3>
-                  <p className="text-gray-600 text-sm mb-4">Premium materials for precision cutting</p>
-                  <div className="flex items-center text-[#2C5530] font-semibold text-sm">
-                    <span>Explore Range</span>
-                    <HiOutlineArrowRight className="w-4 h-4 ml-1" />
+                  <h3 className="text-2xl font-bold text-[#2D3748] mb-2">Acrylic Sheets</h3>
+                  <p className="text-gray-600 mb-4">30+ vibrant colors and transparent options</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#F7931E] font-semibold">3mm - 12mm thickness</span>
+                    <HiOutlineArrowRight className="w-5 h-5 text-[#2D3748] group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Cutting Tools */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-xl group hover:shadow-2xl transition-all duration-500 flex-1">
-                <div className="relative h-32 bg-gradient-to-br from-[#2C5530]/20 to-[#E67E22]/20">
+            {/* Smaller floating cards */}
+            <div className="absolute top-20 right-8 w-64 h-80 group">
+              <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden h-full">
+                <div className="relative h-40 bg-gradient-to-br from-[#2D3748]/10 to-[#F7931E]/10">
                   <Image
                     src="/images/business-3.jpg"
-                    alt="Hands holding precisely cut decorative paper elements"
+                    alt="Detailed wooden cut-out patterns arranged on workshop table"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover"
                     unoptimized
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Cutting Tools</h3>
-                  <p className="text-gray-600 text-sm mb-4">Professional-grade precision instruments</p>
-                  <div className="flex items-center text-[#E67E22] font-semibold text-sm">
-                    <span>View Tools</span>
-                    <HiOutlineArrowRight className="w-4 h-4 ml-1" />
-                  </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-[#2D3748] mb-2">Wood & MDF</h3>
+                  <p className="text-gray-600 text-sm mb-3">Premium hardwoods and engineered materials</p>
+                  <span className="text-[#E53E3E] font-semibold text-sm">50+ wood types</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Bottom Grid Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-            <div className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 group">
-              <div className="relative w-16 h-16 bg-[#F4E6D7] rounded-2xl mb-6 flex items-center justify-center">
-                <Image
-                  src="/images/business-9.jpg"
-                  alt="Geometric paper art installation with precise cuts and folds"
-                  fill
-                  className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
-                />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Geometric Designs</h3>
-              <p className="text-gray-600 mb-6">Precision-cut geometric patterns and installations</p>
-              <div className="flex items-center text-[#2C5530] font-semibold">
-                <span>Browse Designs</span>
-                <HiOutlineArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            <div className="absolute bottom-10 left-8 w-72 h-64 group">
+              <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden h-full">
+                <div className="relative h-32 bg-gradient-to-br from-[#F7931E]/10 to-[#E53E3E]/10">
+                  <Image
+                    src="/images/business-9.jpg"
+                    alt="Detailed close-up of CNC cutting path creating intricate pattern"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-[#2D3748] mb-2">Metal Cutting</h3>
+                  <p className="text-gray-600 text-sm">Aluminum, brass, and steel options</p>
+                </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 group">
-              <div className="relative w-16 h-16 bg-[#F4E6D7] rounded-2xl mb-6 flex items-center justify-center">
-                <Image
-                  src="/images/business-10.jpg"
-                  alt="Indian textile patterns translated to paper craft designs"
-                  fill
-                  className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
-                />
+            <div className="absolute bottom-0 right-1/3 w-56 h-72 group">
+              <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden h-full">
+                <div className="relative h-36 bg-gradient-to-br from-[#2D3748]/10 to-[#E53E3E]/10">
+                  <Image
+                    src="/images/business-6.jpg"
+                    alt="Scrapbooking materials and decorative cut elements arranged artistically"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-[#2D3748] mb-2">Custom Designs</h3>
+                  <p className="text-gray-600 text-sm mb-3">Bring your vision to life</p>
+                  <span className="text-[#F7931E] font-semibold text-sm">Unlimited possibilities</span>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Gujarat Heritage</h3>
-              <p className="text-gray-600 mb-6">Traditional patterns with modern precision cutting</p>
-              <div className="flex items-center text-[#E67E22] font-semibold">
-                <span>Cultural Collection</span>
-                <HiOutlineArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-
-            <div className="bg-[#2C5530] rounded-2xl p-8 text-white shadow-xl hover:shadow-2xl transition-all duration-500 group">
-              <div className="w-16 h-16 bg-white/20 rounded-2xl mb-6 flex items-center justify-center">
-                <HiOutlineSparkles className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Custom Projects</h3>
-              <p className="text-white/90 mb-6">Bring your unique vision to life with our expertise</p>
-              <button className="bg-white text-[#2C5530] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2 group-hover:scale-105">
-                <span>Start Project</span>
-                <HiOutlineArrowRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Craft Innovation Timeline */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, #2C5530 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}></div>
-        </div>
+      {/* CNC Process Reveal */}
+      <section className="py-32 bg-gradient-to-br from-[#E53E3E] to-[#2D3748] text-gray-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-5xl font-bold mb-8">Watch Your Ideas Take Shape</h2>
+              <p className="text-xl text-gray-200 mb-12 leading-relaxed">
+                Our advanced CNC process transforms digital designs into precision-cut reality. Every step is monitored for perfection.
+              </p>
 
-        <div className="max-w-7xl mx-auto px-8 relative z-10">
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Our Craft
-              <span className="block text-[#2C5530]">Innovation Process</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Kala Carv CNC brings industrial precision to the creative world of scrapbooking and crafting. Located in Ahmedabad's Shyamved Industrial Estate, we specialize in turning your intricate designs into perfectly cut materials.
-            </p>
-          </div>
-
-          {/* Timeline Layout */}
-          <div className="relative">
-            {/* Center Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-[#2C5530] via-[#E67E22] to-[#2C5530] h-full rounded-full"></div>
-
-            {/* Timeline Items */}
-            <div className="space-y-24">
-              {/* Step 1 - Left Side */}
-              <div className="flex items-center">
-                <div className="flex-1 pr-8 lg:pr-16">
-                  <div className="bg-white rounded-2xl p-8 shadow-xl shadow-[#2C5530]/10 border border-gray-100 ml-auto max-w-lg group hover:shadow-2xl transition-all duration-500">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-12 h-12 bg-[#F4E6D7] rounded-xl flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[#2C5530]">01</span>
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900">Design Consultation</h3>
-                    </div>
-                    <p className="text-gray-600 mb-6">
-                      We start with understanding your vision. Our experts help optimize designs for CNC cutting and suggest the best approaches for achieving your creative goals.
-                    </p>
-                    <div className="relative h-40 bg-gradient-to-br from-[#F4E6D7] to-gray-100 rounded-xl overflow-hidden">
-                      <Image
-                        src="/images/business-7.jpg"
-                        alt="Woman working on detailed scrapbook in bright studio"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        unoptimized
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-8 h-8 bg-[#2C5530] rounded-full border-4 border-white shadow-lg z-10"></div>
-                <div className="flex-1 pl-8 lg:pl-16"></div>
-              </div>
-
-              {/* Step 2 - Right Side */}
-              <div className="flex items-center">
-                <div className="flex-1 pr-8 lg:pr-16"></div>
-                <div className="w-8 h-8 bg-[#E67E22] rounded-full border-4 border-white shadow-lg z-10"></div>
-                <div className="flex-1 pl-8 lg:pl-16">
-                  <div className="bg-white rounded-2xl p-8 shadow-xl shadow-[#E67E22]/10 border border-gray-100 max-w-lg group hover:shadow-2xl transition-all duration-500">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-12 h-12 bg-[#F4E6D7] rounded-xl flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[#E67E22]">02</span>
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900">Precision Cutting</h3>
-                    </div>
-                    <p className="text-gray-600 mb-6">
-                      Using state-of-the-art CNC technology, we transform your designs into perfectly cut materials with industrial precision and microscopic accuracy.
-                    </p>
-                    <div className="relative h-40 bg-gradient-to-br from-[#F4E6D7] to-gray-100 rounded-xl overflow-hidden">
-                      <Image
-                        src="/images/business-1.jpg"
-                        alt="CNC machine cutting intricate paper patterns close up"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        unoptimized
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Step 3 - Left Side */}
-              <div className="flex items-center">
-                <div className="flex-1 pr-8 lg:pr-16">
-                  <div className="bg-white rounded-2xl p-8 shadow-xl shadow-[#2C5530]/10 border border-gray-100 ml-auto max-w-lg group hover:shadow-2xl transition-all duration-500">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-12 h-12 bg-[#F4E6D7] rounded-xl flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[#2C5530]">03</span>
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-900">Quality Delivery</h3>
-                    </div>
-                    <p className="text-gray-600 mb-6">
-                      Your precision-cut materials are carefully quality-checked and delivered ready for your creative projects with our signature attention to detail.
-                    </p>
-                    <div className="relative h-40 bg-gradient-to-br from-[#F4E6D7] to-gray-100 rounded-xl overflow-hidden">
-                      <Image
-                        src="/images/business-6.jpg"
-                        alt="Scrapbook page with laser cut elements and embellishments"
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        unoptimized
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-8 h-8 bg-[#2C5530] rounded-full border-4 border-white shadow-lg z-10"></div>
-                <div className="flex-1 pl-8 lg:pl-16"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Process Stats */}
-          <div className="mt-24 grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#2C5530] mb-2">24-48h</div>
-              <div className="text-gray-600 font-medium">Typical Turnaround</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#E67E22] mb-2">100%</div>
-              <div className="text-gray-600 font-medium">Precision Guaranteed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#2C5530] mb-2">7PM</div>
-              <div className="text-gray-600 font-medium">Daily Until</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-[#E67E22] mb-2">4.3★</div>
-              <div className="text-gray-600 font-medium">Customer Rating</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community Testimonial Marquee */}
-      <section className="py-32 bg-[#F4E6D7] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8">
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-8">
-              Craft Community
-              <span className="block text-[#2C5530]">Voices</span>
-            </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              Hear from the passionate crafters who trust Kala Carv CNC for their precision cutting needs and creative projects.
-            </p>
-          </div>
-
-          {/* Testimonials Asymmetric Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-            {/* Large Testimonial */}
-            <div className="lg:col-span-8">
-              <div className="bg-white rounded-3xl p-12 shadow-2xl shadow-[#2C5530]/10 border border-gray-100 relative overflow-hidden group hover:shadow-3xl transition-all duration-500">
-                {/* Background Pattern */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-[#F4E6D7] rounded-full transform translate-x-20 -translate-y-20 opacity-50"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex items-start gap-6 mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-[#2C5530] to-[#E67E22] rounded-2xl flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
-                      LC
+              {/* Process steps with animation */}
+              <div className="space-y-6">
+                {processSteps.map((step, index) => (
+                  <div 
+                    key={index}
+                    className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-500 ${
+                      activeProcess === index 
+                        ? 'bg-white/20 backdrop-blur-xl border border-white/30 scale-105' 
+                        : 'bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
+                      activeProcess === index ? 'bg-[#F7931E] text-[#2D3748]' : 'bg-white/20 text-white'
+                    }`}>
+                      {index + 1}
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">Local Crafter</h3>
-                      <div className="flex gap-1 mb-4">
-                        {[...Array(4)].map((_, i) => (
-                          <HiOutlineStar key={i} className="w-5 h-5 text-[#E67E22] fill-current" />
-                        ))}
-                        <HiOutlineStar className="w-5 h-5 text-gray-300" />
-                      </div>
+                      <h3 className="text-lg font-semibold">{step.title}</h3>
+                      <p className="text-gray-300 text-sm">{step.desc}</p>
                     </div>
                   </div>
-                  <blockquote className="text-2xl lg:text-3xl text-gray-800 leading-relaxed mb-6 italic">
-                    "Looking forward to working with Kala Carv CNC for our <span className="text-[#2C5530] font-semibold">upcoming scrapbooking project requirements</span>. Their precision approach to crafting is exactly what our community needs."
-                  </blockquote>
-                  <div className="text-gray-600">
-                    <p className="font-medium">Ahmedabad Craft Enthusiast</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
-            {/* Smaller Testimonial */}
-            <div className="lg:col-span-4">
-              <div className="bg-[#2C5530] text-white rounded-3xl p-8 shadow-2xl shadow-[#2C5530]/20 h-full flex flex-col justify-center group hover:shadow-3xl transition-all duration-500">
-                <div className="mb-6">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(4)].map((_, i) => (
-                      <HiOutlineStar key={i} className="w-5 h-5 text-[#E67E22] fill-current" />
-                    ))}
-                    <HiOutlineStar className="w-5 h-5 text-white/50" />
+            <div className="relative">
+              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20">
+                <Image
+                  src="/images/business-4.jpg"
+                  alt="Modern workshop interior with CNC machines and organized tools"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                
+                {/* Floating process indicator */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="bg-white/90 backdrop-blur-xl rounded-xl p-4 border border-white/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[#2D3748] font-semibold">Current Process:</span>
+                      <span className="text-[#F7931E] font-bold">{activeProcess + 1}/5</span>
+                    </div>
+                    <h4 className="text-[#2D3748] font-bold text-lg">{processSteps[activeProcess].title}</h4>
+                    <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
+                      <div 
+                        className="bg-gradient-to-r from-[#F7931E] to-[#E53E3E] h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${((activeProcess + 1) / processSteps.length) * 100}%` }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
-                <blockquote className="text-xl leading-relaxed mb-6 italic">
-                  "Great to have a <span className="text-[#E67E22] font-semibold">professional CNC service focused on crafting</span> needs in Ahmedabad."
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-lg font-bold">
-                    DE
-                  </div>
-                  <div>
-                    <p className="font-semibold">Design Enthusiast</p>
-                    <p className="text-white/80 text-sm">Creative Professional</p>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-
-          {/* Community Stats */}
-          <div className="bg-white rounded-3xl p-12 shadow-2xl shadow-[#2C5530]/10 border border-gray-100">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 text-center">
-              <div className="group">
-                <div className="text-4xl lg:text-5xl font-bold text-[#2C5530] mb-3 group-hover:scale-110 transition-transform duration-300">7+</div>
-                <div className="text-gray-700 font-medium">Community Reviews</div>
-                <div className="text-sm text-gray-500 mt-1">Growing Trust</div>
-              </div>
-              <div className="group">
-                <div className="text-4xl lg:text-5xl font-bold text-[#E67E22] mb-3 group-hover:scale-110 transition-transform duration-300">4.3★</div>
-                <div className="text-gray-700 font-medium">Average Rating</div>
-                <div className="text-sm text-gray-500 mt-1">Quality Service</div>
-              </div>
-              <div className="group">
-                <div className="text-4xl lg:text-5xl font-bold text-[#2C5530] mb-3 group-hover:scale-110 transition-transform duration-300">100%</div>
-                <div className="text-gray-700 font-medium">Craft Focused</div>
-                <div className="text-sm text-gray-500 mt-1">Specialized Service</div>
-              </div>
-              <div className="group">
-                <div className="text-4xl lg:text-5xl font-bold text-[#E67E22] mb-3 group-hover:scale-110 transition-transform duration-300">24h</div>
-                <div className="text-gray-700 font-medium">Quick Response</div>
-                <div className="text-sm text-gray-500 mt-1">Call 095866 60214</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Final CTA */}
-          <div className="mt-16 text-center">
-            <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Ready to Precision-Cut Your Vision?
-            </h3>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-[#2C5530] text-white px-10 py-5 rounded-xl font-semibold hover:bg-[#2C5530]/90 transition-all duration-300 text-lg flex items-center justify-center gap-3 group">
-                Get Your Custom Cut Quote
-                <HiOutlineArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="border-2 border-[#2C5530] text-[#2C5530] px-10 py-5 rounded-xl font-semibold hover:bg-[#2C5530] hover:text-white transition-all duration-300 text-lg flex items-center justify-center gap-3">
-                <HiOutlinePhone className="w-6 h-6" />
-                095866 60214
-              </button>
             </div>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* Creative Categories Bento */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-[#2D3748] mb-6">Explore Our Craft Categories</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              From delicate scrapbook elements to robust signage, we precision-cut across all creative categories
+            </p>
+          </div>
+
+          {/* Bento grid layout */}
+          <div className="grid grid-cols-12 gap-6 h-[700px]">
+            {/* Large featured category */}
+            <div className="col-span-12 md:col-span-8 row-span-2 group">
+              <div className="bg-gradient-to-br from-[#E53E3E]/5 to-[#F7931E]/5 rounded-3xl p-8 h-full flex flex-col justify-between hover:shadow-2xl hover:shadow-[#E53E3E]/10 transition-all duration-500 hover:scale-[1.02] overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#E53E3E]/10 to-transparent">
+                  <Image
+                    src="/images/business-6.jpg"
+                    alt="Scrapbooking materials and decorative cut elements arranged artistically"
+                    fill
+                    className="object-cover opacity-20"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative z-10">
+                  <div className="bg-[#F7931E]/20 backdrop-blur-xl border border-[#F7931E]/30 rounded-full px-4 py-2 inline-block mb-6">
+                    <span className="text-[#2D3748] font-semibold">Most Popular</span>
+                  </div>
+                  <h3 className="text-4xl font-bold text-[#2D3748] mb-4">Scrapbooking Essentials</h3>
+                  <p className="text-gray-600 text-lg mb-6 max-w-md">Custom frames, decorative borders, photo corners, and intricate paper cutouts for your memory keeping projects.</p>
+                </div>
+                <div className="flex items-center justify-between relative z-10">
+                  <span className="text-[#E53E3E] font-bold text-lg">200+ Designs Available</span>
+                  <HiOutlineArrowRight className="w-8 h-8 text-[#2D3748] group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
+            </div>
+
+            {/* Medium category cards */}
+            <div className="col-span-12 md:col-span-4 group">
+              <div className="bg-gradient-to-br from-[#2D3748]/5 to-[#F7931E]/5 rounded-2xl p-6 h-full hover:shadow-xl transition-all duration-500 hover:scale-105 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2D3748]/10 to-transparent">
+                  <Image
+                    src="/images/business-3.jpg"
+                    alt="Detailed wooden cut-out patterns arranged on workshop table"
+                    fill
+                    className="object-cover opacity-15"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative z-10">
+                  <HiOutlineBuildingStorefront className="w-12 h-12 text-[#F7931E] mb-4" />
+                  <h3 className="text-2xl font-bold text-[#2D3748] mb-3">Business Signage</h3>
+                  <p className="text-gray-600 mb-4">Professional signs and displays</p>
+                  <span className="text-[#E53E3E] font-semibold">Custom Sizes</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-12 md:col-span-4 group">
+              <div className="bg-gradient-to-br from-[#F7931E]/5 to-[#E53E3E]/5 rounded-2xl p-6 h-full hover:shadow-xl transition-all duration-500 hover:scale-105 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#F7931E]/10 to-transparent">
+                  <Image
+                    src="/images/business-5.jpg"
+                    alt="Hands holding precisely cut wooden ornamental piece"
+                    fill
+                    className="object-cover opacity-15"
+                    unoptimized
+                  />
+                </div>
+                <div className="relative z-10">
+                  <HiOutlineHeart className="w-12 h-12 text-[#E53E3E] mb-4" />
+                  <h3 className="text-2xl font-bold text-[#2D3748] mb-3">Wedding Decor</h3>
+                  <p className="text-gray-600 mb-4">Elegant ceremony elements</p>
+                  <span className="text-[#F7931E] font-semibold">Personalized</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Small category cards */}
+            <div className="col-span-6 md:col-span-3 group">
+              <div className="bg-white border-2 border-gray-100 rounded-xl p-4 h-full hover:border-[#F7931E] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <HiOutlineSparkles className="w-8 h-8 text-[#F7931E] mb-3" />
+                <h4 className="text-lg font-bold text-[#2D3748] mb-2">Jewelry Making</h4>
+                <p className="text-gray-600 text-sm">Precision components</p>
+              </div>
+            </div>
+
+            <div className="col-span-6 md:col-span-3 group">
+              <div className="bg-white border-2 border-gray-100 rounded-xl p-4 h-full hover:border-[#E53E3E] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <HiOutlineUserGroup className="w-8 h-8 text-[#E53E3E] mb-3" />
+                <h4 className="text-lg font-bold text-[#2D3748] mb-2">Educational Models</h4>
+                <p className="text-gray-600 text-sm">Learning tools</p>
+              </div>
+            </div>
+
+            <div className="col-span-6 md:col-span-3 group">
+              <div className="bg-white border-2 border-gray-100 rounded-xl p-4 h-full hover:border-[#F7931E] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <HiOutlineBolt className="w-8 h-8 text-[#F7931E] mb-3" />
+                <h4 className="text-lg font-bold text-[#2D3748] mb-2">Prototyping</h4>
+                <p className="text-gray-600 text-sm">Rapid development</p>
+              </div>
+            </div>
+
+            <div className="col-span-6 md:col-span-3 group">
+              <div className="bg-white border-2 border-gray-100 rounded-xl p-4 h-full hover:border-[#E53E3E] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <HiOutlineWrench className="w-8 h-8 text-[#E53E3E] mb-3" />
+                <h4 className="text-lg font-bold text-[#2D3748] mb-2">Custom Parts</h4>
+                <p className="text-gray-600 text-sm">Replacement pieces</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Precision Values Grid */}
+      <section className="py-32 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-[#F7931E]/10 to-[#E53E3E]/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-[#2D3748]/10 to-[#F7931E]/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h2 className="text-5xl font-bold text-[#2D3748] mb-8">Why Crafters Choose Kala Carv</h2>
+              <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+                Located in Ahmedabad's Shyamved Industrial Estate, we combine advanced technology with creative passion to deliver exceptional results for every project.
+              </p>
+
+              {/* Values grid */}
+              <div className="grid grid-cols-2 gap-8">
+                {precisionValues.map((value, index) => (
+                  <div key={index} className="group">
+                    <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-2xl p-6 hover:shadow-2xl hover:shadow-[#2D3748]/10 transition-all duration-500 hover:scale-105">
+                      <value.icon className="w-12 h-12 text-[#F7931E] mb-4 group-hover:scale-110 transition-transform" />
+                      <h3 className="text-xl font-bold text-[#2D3748] mb-2">{value.title}</h3>
+                      <p className="text-[#E53E3E] font-semibold text-lg">{value.stat}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Testimonials */}
+              <div className="mt-16 space-y-6">
+                <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-xl p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#F7931E] to-[#E53E3E] rounded-full flex items-center justify-center text-gray-900 font-bold">P</div>
+                    </div>
+                    <div>
+                      <p className="text-gray-700 italic mb-3">"The precision and quality of their CNC work is outstanding for scrapbooking projects"</p>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-[#2D3748]">Priya S.</span>
+                        <div className="flex text-[#F7931E]">
+                          {[...Array(5)].map((_, i) => <HiOutlineStar key={i} className="w-4 h-4 fill-current" />)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/80 backdrop-blur-xl border border-white/20 rounded-xl p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#E53E3E] to-[#2D3748] rounded-full flex items-center justify-center text-gray-900 font-bold">M</div>
+                    </div>
+                    <div>
+                      <p className="text-gray-700 italic mb-3">"Excellent service and attention to detail for craft projects"</p>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-[#2D3748]">Meera K.</span>
+                        <div className="flex text-[#F7931E]">
+                          {[...Array(5)].map((_, i) => <HiOutlineStar key={i} className="w-4 h-4 fill-current" />)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="relative h-[600px] rounded-3xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#E53E3E]/10 to-[#F7931E]/10">
+                  <Image
+                    src="/images/business-10.jpg"
+                    alt="Artisan examining precision-cut piece with measuring tools"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+                
+                {/* Floating stats */}
+                <div className="absolute top-8 right-8">
+                  <div className="bg-white/90 backdrop-blur-xl border border-white/30 rounded-2xl p-4 shadow-xl">
+                    <div className="text-3xl font-bold text-[#E53E3E]">4.3★</div>
+                    <div className="text-sm text-gray-600">Customer Rating</div>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-8 left-8">
+                  <div className="bg-white/90 backdrop-blur-xl border border-white/30 rounded-2xl p-4 shadow-xl">
+                    <div className="text-2xl font-bold text-[#2D3748]">Open Daily</div>
+                    <div className="text-sm text-gray-600">Until 7:00 PM</div>
+                  </div>
+                </div>
+
+                <div className="absolute top-1/3 left-8">
+                  <div className="bg-[#F7931E]/90 backdrop-blur-xl border border-white/30 rounded-2xl p-4 shadow-xl">
+                    <div className="text-xl font-bold text-gray-900">2-3 Days</div>
+                    <div className="text-sm text-white/90">Quick Turnaround</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Workshop */}
+      <section className="py-32 bg-gradient-to-br from-[#2D3748] via-[#E53E3E] to-[#F7931E] text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-5xl lg:text-6xl font-bold mb-8">
+            Join Our Creative Workshop Updates
+          </h2>
+          <p className="text-xl text-gray-200 mb-12 leading-relaxed">
+            Get notified about new materials, cutting techniques, and exclusive workshops. 
+            Plus receive a free design consultation for your next project.
+          </p>
+
+          {/* Newsletter form */}
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 mb-12">
+            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+              <input
+                type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="flex-1 px-6 py-4 bg-white text-[#2D3748] rounded-xl placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F7931E]"
+              />
+              <button className="bg-[#F7931E] text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-[#F7931E]/90 transition-all duration-300 hover:scale-105 whitespace-nowrap">
+                Join Workshop List
+              </button>
+            </div>
+            <p className="text-gray-300 text-sm mt-4">
+              Free design consultation included • Unsubscribe anytime • No spam, just creativity
+            </p>
+          </div>
+
+          {/* Workshop benefits */}
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all duration-300">
+              <HiOutlineBolt className="w-12 h-12 text-[#F7931E] mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-3">New Techniques</h3>
+              <p className="text-gray-300">Learn advanced CNC cutting methods and creative applications</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all duration-300">
+              <HiOutlineSparkles className="w-12 h-12 text-[#F7931E] mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-3">Material Updates</h3>
+              <p className="text-gray-300">First access to new materials and color options</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/15 transition-all duration-300">
+              <HiOutlineHeart className="w-12 h-12 text-[#F7931E] mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-3">Project Ideas</h3>
+              <p className="text-gray-300">Inspiring projects and seasonal craft suggestions</p>
+            </div>
+          </div>
+
+          {/* Contact info footer */}
+          <div className="mt-20 pt-12 border-t border-white/20">
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div className="flex flex-col items-center">
+                <HiOutlineMapPin className="w-8 h-8 text-[#F7931E] mb-2" />
+                <p className="text-gray-300">Shyamved Industrial Estate, Ahmedabad</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <HiOutlinePhone className="w-8 h-8 text-[#F7931E] mb-2" />
+                <p className="text-gray-300">095866 60214</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <HiOutlineClock className="w-8 h-8 text-[#F7931E] mb-2" />
+                <p className="text-gray-300">Open Daily Until 7 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

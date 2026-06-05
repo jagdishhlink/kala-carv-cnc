@@ -140,7 +140,7 @@ export default function Workshops() {
               <div className="space-y-6">
                 <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
                   <HiOutlineWrench className="h-5 w-5 text-[#E67E22]" />
-                  <span className="text-white font-medium">Precision Craft Education</span>
+                  <span className="text-gray-900 font-medium">Precision Craft Education</span>
                 </div>
                 
                 <h1 className="text-6xl lg:text-7xl font-bold text-white leading-none tracking-tight">
@@ -179,7 +179,7 @@ export default function Workshops() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#2C5530]/80 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-white font-semibold text-lg">Professional-grade CNC equipment</p>
+                  <p className="text-gray-900 font-semibold text-lg">Professional-grade CNC equipment</p>
                   <p className="text-white/80">Ahmedabad's premier craft technology center</p>
                 </div>
               </div>
@@ -214,7 +214,7 @@ export default function Workshops() {
                   <div className="bg-gradient-to-br from-[#F4E6D7] to-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
                     <div className="text-center mb-6">
                       <div className="text-3xl font-bold text-[#2C5530] mb-1">{dateItem.date}</div>
-                      <div className="text-gray-600 font-medium">{dateItem.day}</div>
+                      <div className="text-gray-300 font-medium">{dateItem.day}</div>
                     </div>
                     
                     <div className="space-y-3">
@@ -228,7 +228,7 @@ export default function Workshops() {
                       ))}
                     </div>
                     
-                    <button className="w-full mt-6 bg-[#2C5530] text-white py-3 rounded-lg font-medium hover:bg-[#2C5530]/90 transition-colors duration-300">
+                    <button className="w-full mt-6 bg-[#2C5530] text-gray-900 py-3 rounded-lg font-medium hover:bg-[#2C5530]/90 transition-colors duration-300">
                       Book Date
                     </button>
                   </div>
@@ -262,7 +262,7 @@ export default function Workshops() {
                     onClick={() => setSelectedSkillLevel(level)}
                     className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
                       selectedSkillLevel === level
-                        ? 'bg-[#2C5530] text-white shadow-lg'
+                        ? 'bg-[#2C5530] text-gray-900 shadow-lg'
                         : 'text-gray-600 hover:text-[#2C5530] hover:bg-gray-50'
                     }`}
                   >
@@ -317,7 +317,7 @@ export default function Workshops() {
                       setSelectedWorkshop(workshop)
                       setBookingStep('details')
                     }}
-                    className="w-full bg-[#2C5530] text-white py-4 rounded-xl font-semibold hover:bg-[#2C5530]/90 transition-all duration-300 hover:scale-105"
+                    className="w-full bg-[#2C5530] text-gray-900 py-4 rounded-xl font-semibold hover:bg-[#2C5530]/90 transition-all duration-300 hover:scale-105"
                   >
                     Book This Workshop
                   </button>
@@ -363,7 +363,7 @@ export default function Workshops() {
                   </div>
                   
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#2C5530] transition-colors">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#2C5530] transition-colors">
                       {project.title}
                     </h3>
                     <div className="flex items-center justify-between">
@@ -392,7 +392,7 @@ export default function Workshops() {
       <section className="py-24 bg-gradient-to-br from-gray-900 to-[#2C5530]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Book Your
               <span className="text-[#E67E22]"> Precision Journey</span>
             </h2>
@@ -436,17 +436,17 @@ export default function Workshops() {
                       <div className="space-y-4 mb-6">
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-[#2C5530] rounded-lg flex items-center justify-center">
-                            <HiOutlineClock className="h-5 w-5 text-white" />
+                            <HiOutlineClock className="h-5 w-5 text-gray-900" />
                           </div>
                           <div>
-                            <div className="font-semibold text-gray-900">Workshop Hours</div>
+                            <div className="font-semibold text-white">Workshop Hours</div>
                             <div className="text-gray-600">Daily until 7 PM</div>
                           </div>
                         </div>
                         
                         <div className="flex items-center space-x-3">
                           <div className="w-10 h-10 bg-[#E67E22] rounded-lg flex items-center justify-center">
-                            <HiOutlineUserGroup className="h-5 w-5 text-white" />
+                            <HiOutlineUserGroup className="h-5 w-5 text-gray-900" />
                           </div>
                           <div>
                             <div className="font-semibold text-gray-900">Small Class Sizes</div>
@@ -476,7 +476,7 @@ export default function Workshops() {
                 
                 <div className="grid lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{selectedWorkshop.title}</h3>
+                    <h3 className="text-2xl font-bold text-white mb-6">{selectedWorkshop.title}</h3>
                     
                     <div className="bg-[#F4E6D7] rounded-2xl p-6 mb-8">
                       <div className="grid md:grid-cols-3 gap-4 text-center">
@@ -525,7 +525,7 @@ export default function Workshops() {
                   </div>
                   
                   <div>
-                    <div className="bg-gradient-to-br from-[#2C5530] to-gray-800 rounded-2xl p-6 text-white">
+                    <div className="bg-gradient-to-br from-[#2C5530] to-gray-800 rounded-2xl p-6 text-gray-900">
                       <h4 className="text-xl font-bold mb-6">Ready to Book?</h4>
                       
                       <div className="space-y-4 mb-6">
@@ -541,7 +541,7 @@ export default function Workshops() {
                         </div>
                       </div>
                       
-                      <button className="w-full bg-[#E67E22] text-white py-4 rounded-xl font-semibold hover:bg-[#E67E22]/90 transition-all duration-300 shadow-lg">
+                      <button className="w-full bg-[#E67E22] text-gray-900 py-4 rounded-xl font-semibold hover:bg-[#E67E22]/90 transition-all duration-300 shadow-lg">
                         Get Your Custom Cut Quote
                       </button>
                     </div>

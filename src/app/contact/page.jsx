@@ -2,530 +2,740 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { HiOutlinePhone, HiOutlineMapPin, HiOutlineClock, HiOutlineEnvelope, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlineUserGroup, HiOutlineWrench, HiOutlineBolt } from 'react-icons/hi2'
+import { HiOutlinePhone, HiOutlineMapPin, HiOutlineClock, HiOutlineEnvelope, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlineWrench, HiOutlineBolt } from 'react-icons/hi2'
 
-export default function ContactPage() {
-  const [selectedService, setSelectedService] = useState('')
+export default function Contact() {
+  const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({
+    projectType: '',
+    material: '',
+    dimensions: '',
+    quantity: '',
+    timeline: '',
     name: '',
     email: '',
     phone: '',
-    project: '',
-    materials: '',
-    urgency: ''
+    description: ''
   })
 
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+  const [selectedTime, setSelectedTime] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
+
+  const steps = [
+    { id: 1, title: 'Project Type', icon: HiOutlineWrench },
+    { id: 2, title: 'Specifications', icon: HiOutlineBolt },
+    { id: 3, title: 'Contact Details', icon: HiOutlineEnvelope }
+  ]
+
+  const projectTypes = [
+    'Custom Scrapbook Elements',
+    'Decorative Frames',
+    'Personalized Signs',
+    'Photo Album Components',
+    'Craft Templates',
+    'Other Custom Project'
+  ]
+
+  const materials = [
+    'Wood (Pine, Plywood)',
+    'MDF Board',
+    'Acrylic Sheets',
+    'Metal (Aluminum)',
+    'Cardboard/Paper',
+    'Not Sure - Need Advice'
+  ]
+
+  const timeSlots = [
+    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
+    '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM'
+  ]
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
+  const nextStep = () => {
+    if (currentStep < 3) setCurrentStep(currentStep + 1)
+  }
+
+  const prevStep = () => {
+    if (currentStep > 1) setCurrentStep(currentStep - 1)
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Contact Form Overlay */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#F4E6D7] to-gray-900"></div>
-        <div className="absolute inset-0">
-          <Image 
-            src="/images/business-4.jpg" 
-            alt="Modern industrial workshop with organized craft supplies"
-            fill
-            className="object-cover opacity-20"
-            unoptimized
-          />
-        </div>
-        
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-32">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Contact Info Cards */}
-            <div className="space-y-8">
-              <div>
-                <h1 className="text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                  Precision
-                  <span className="block text-[#E67E22]">Consultation</span>
-                </h1>
-                <p className="text-xl text-gray-200 leading-relaxed">
-                  Get expert guidance for your CNC cutting projects. From design optimization to material selection.
-                </p>
-              </div>
-
-              <div className="grid gap-6">
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#2C5530] rounded-full flex items-center justify-center">
-                      <HiOutlinePhone className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Direct Consultation</h3>
-                      <p className="text-gray-300">095866 60214</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#E67E22] rounded-full flex items-center justify-center">
-                      <HiOutlineMapPin className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Workshop Location</h3>
-                      <p className="text-gray-300">Shyamved Industrial Estate, Ahmedabad</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#2C5530] rounded-full flex items-center justify-center">
-                      <HiOutlineClock className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Operating Hours</h3>
-                      <p className="text-gray-300">Open Daily Until 7 PM</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Contact Form */}
-            <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/30">
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-3">Get Your Custom Cut Quote</h2>
-                <p className="text-gray-600">Tell us about your project and we'll provide a detailed consultation</p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Your Name</label>
-                    <input 
-                      type="text" 
-                      name="name"
-                      value={formData.name}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2C5530] focus:border-transparent transition-all"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
-                    <input 
-                      type="tel" 
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2C5530] focus:border-transparent transition-all"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                  <input 
-                    type="email" 
-                    name="email"
-                    value={formData.email}
-                    onChange={handleFormChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2C5530] focus:border-transparent transition-all"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Project Description</label>
-                  <textarea 
-                    name="project"
-                    value={formData.project}
-                    onChange={handleFormChange}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2C5530] focus:border-transparent transition-all resize-none"
-                    placeholder="Describe your scrapbooking project, design complexity, and cutting requirements..."
-                    required
-                  ></textarea>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Materials Needed</label>
-                    <select 
-                      name="materials"
-                      value={formData.materials}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2C5530] focus:border-transparent transition-all"
-                      required
-                    >
-                      <option value="">Select Material</option>
-                      <option value="cardstock">Cardstock</option>
-                      <option value="wood">Thin Wood</option>
-                      <option value="acrylic">Acrylic</option>
-                      <option value="mixed">Multiple Materials</option>
-                      <option value="consultation">Need Material Advice</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Project Urgency</label>
-                    <select 
-                      name="urgency"
-                      value={formData.urgency}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2C5530] focus:border-transparent transition-all"
-                      required
-                    >
-                      <option value="">Select Timeline</option>
-                      <option value="flexible">Flexible (3-5 days)</option>
-                      <option value="standard">Standard (1-2 days)</option>
-                      <option value="rush">Rush (24 hours)</option>
-                      <option value="consultation">Need Timeline Advice</option>
-                    </select>
-                  </div>
-                </div>
-
-                <button 
-                  type="submit"
-                  className="w-full bg-[#2C5530] text-white py-4 px-6 rounded-lg font-semibold hover:bg-[#E67E22] transition-all duration-300 flex items-center justify-center gap-2 group"
-                >
-                  Submit Project Details
-                  <HiOutlineArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Workshop Booking Calendar */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+    <main className="min-h-screen pt-16 lg:pt-20">
+      {/* Hero Section with Project Inquiry */}
+      <section className="relative bg-gradient-to-br from-[#E53E3E] to-gray-800 overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl">
+              <h1 className="text-5xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+                Start Your
+                <span className="block text-[#F7931E]">Custom Project</span>
+              </h1>
+              <p className="text-xl text-gray-200 mb-12 leading-relaxed">
+                Transform your creative vision into reality with our precision CNC cutting services. 
+                Get an instant quote and expert consultation for your scrapbooking project.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a href="tel:09586660214" className="inline-flex items-center justify-center px-8 py-4 bg-[#2D3748] text-white font-semibold rounded-2xl hover:bg-[#F7931E] transition-all duration-300 transform hover:scale-105">
+                  <HiOutlinePhone className="mr-3 h-5 w-5" />
+                  Call Now for Instant Quote
+                </a>
+                <button 
+                  onClick={() => document.getElementById('inquiry-wizard').scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white/10 text-gray-900 border-2 border-white/20 font-semibold rounded-2xl hover:bg-white hover:text-[#2D3748] transition-all duration-300"
+                >
+                  Project Inquiry Form
+                  <HiOutlineArrowRight className="ml-3 h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl">
                 <Image 
-                  src="/images/business-7.jpg" 
-                  alt="Woman working on detailed scrapbook in bright studio"
+                  src="/images/business-1.jpg"
+                  alt="CNC machine cutting intricate wooden design close up"
                   width={600}
                   height={400}
-                  className="object-cover w-full h-96"
+                  className="w-full h-full object-cover"
                   unoptimized
                 />
               </div>
-            </div>
-
-            <div>
-              <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Workshop
-                <span className="block text-[#E67E22]">Calendar</span>
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Join our precision crafting workshops and learn to integrate CNC technology with traditional scrapbooking techniques.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-[#F4E6D7] rounded-2xl p-6 hover:shadow-lg transition-all duration-300 group cursor-pointer">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">CNC Design Basics</h3>
-                      <p className="text-gray-700 mb-3">Learn to prepare your designs for precision cutting</p>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
-                        <span className="flex items-center gap-1">
-                          <HiOutlineClock className="w-4 h-4" />
-                          Weekends, 10 AM - 2 PM
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <HiOutlineUserGroup className="w-4 h-4" />
-                          Max 8 participants
-                        </span>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 bg-[#2C5530] rounded-full flex items-center justify-center group-hover:bg-[#E67E22] transition-colors">
-                      <HiOutlineWrench className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-[#F4E6D7] rounded-2xl p-6 hover:shadow-lg transition-all duration-300 group cursor-pointer">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Advanced Pattern Making</h3>
-                      <p className="text-gray-700 mb-3">Master complex geometric patterns and intricate cuts</p>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
-                        <span className="flex items-center gap-1">
-                          <HiOutlineClock className="w-4 h-4" />
-                          Monthly intensive, Full day
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <HiOutlineUserGroup className="w-4 h-4" />
-                          Max 6 participants
-                        </span>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 bg-[#2C5530] rounded-full flex items-center justify-center group-hover:bg-[#E67E22] transition-colors">
-                      <HiOutlineBolt className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-[#F4E6D7] rounded-2xl p-6 hover:shadow-lg transition-all duration-300 group cursor-pointer">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">Material Mastery</h3>
-                      <p className="text-gray-700 mb-3">Explore different materials and cutting techniques</p>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
-                        <span className="flex items-center gap-1">
-                          <HiOutlineClock className="w-4 h-4" />
-                          Bi-weekly, 2 PM - 5 PM
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <HiOutlineUserGroup className="w-4 h-4" />
-                          Max 10 participants
-                        </span>
-                      </div>
-                    </div>
-                    <div className="w-12 h-12 bg-[#2C5530] rounded-full flex items-center justify-center group-hover:bg-[#E67E22] transition-colors">
-                      <HiOutlineCheckCircle className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8">
-                <button className="bg-[#2C5530] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#E67E22] transition-all duration-300 flex items-center gap-2">
-                  View Full Workshop Calendar
-                  <HiOutlineArrowRight className="w-5 h-5" />
-                </button>
+              <div className="absolute -bottom-6 -right-6 bg-[#F7931E] text-[#2D3748] p-6 rounded-2xl shadow-lg">
+                <div className="text-2xl font-bold">4.3★</div>
+                <div className="text-sm font-medium">Customer Rating</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Expert Consultation Cards */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* Project Inquiry Wizard */}
+      <section id="inquiry-wizard" className="py-32 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Expert Consultation
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6">
+              Get Your Custom Quote
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Book one-on-one sessions with our CNC specialists and transform your creative vision into precision-cut reality
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Our intelligent project wizard will help us understand your needs and provide accurate pricing
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Design Optimization */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#2C5530]/10 to-[#E67E22]/10 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-[#2C5530] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <HiOutlineBolt className="w-8 h-8 text-white" />
+          {/* Progress Steps */}
+          <div className="flex justify-center mb-16">
+            <div className="flex space-x-8">
+              {steps.map((step) => (
+                <div key={step.id} className="flex items-center">
+                  <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 ${
+                    currentStep >= step.id 
+                      ? 'bg-[#2D3748] border-[#2D3748] text-gray-900' 
+                      : 'border-gray-300 text-gray-400'
+                  }`}>
+                    <step.icon className="h-6 w-6" />
+                  </div>
+                  <div className="ml-4 hidden sm:block">
+                    <div className={`text-sm font-medium ${
+                      currentStep >= step.id ? 'text-[#2D3748]' : 'text-gray-400'
+                    }`}>
+                      Step {step.id}
+                    </div>
+                    <div className={`text-xs ${
+                      currentStep >= step.id ? 'text-gray-600' : 'text-gray-400'
+                    }`}>
+                      {step.title}
+                    </div>
+                  </div>
+                  {step.id < steps.length && (
+                    <div className={`ml-8 w-16 h-0.5 ${
+                      currentStep > step.id ? 'bg-[#2D3748]' : 'bg-gray-300'
+                    }`}></div>
+                  )}
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Design Optimization</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Optimize your designs for CNC cutting. Learn about kerf compensation, material considerations, and cutting path efficiency.
-                </p>
-                <ul className="space-y-2 mb-8">
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-[#2C5530]" />
-                    Design file preparation
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-[#2C5530]" />
-                    Material selection guidance
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-[#2C5530]" />
-                    Cost optimization tips
-                  </li>
-                </ul>
-                <button className="w-full bg-[#F4E6D7] text-gray-900 py-3 px-6 rounded-lg font-semibold hover:bg-[#2C5530] hover:text-white transition-all duration-300">
-                  Book Session - ₹500
-                </button>
-              </div>
-            </div>
-
-            {/* Project Planning */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#E67E22]/10 to-[#2C5530]/10 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-[#E67E22] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <HiOutlineWrench className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Project Planning</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Comprehensive project planning from concept to completion. Timeline estimation, material sourcing, and execution strategy.
-                </p>
-                <ul className="space-y-2 mb-8">
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-[#E67E22]" />
-                    Timeline development
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-[#E67E22]" />
-                    Budget estimation
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-[#E67E22]" />
-                    Resource planning
-                  </li>
-                </ul>
-                <button className="w-full bg-[#F4E6D7] text-gray-900 py-3 px-6 rounded-lg font-semibold hover:bg-[#E67E22] hover:text-white transition-all duration-300">
-                  Book Session - ₹750
-                </button>
-              </div>
-            </div>
-
-            {/* Technical Training */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group relative overflow-hidden md:col-span-2 lg:col-span-1">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#2C5530]/10 to-gray-900/10 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="relative">
-                <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <HiOutlineUserGroup className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Technical Training</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Learn CNC operation basics, safety protocols, and maintenance. Perfect for serious crafters wanting hands-on knowledge.
-                </p>
-                <ul className="space-y-2 mb-8">
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-gray-900" />
-                    Equipment operation
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-gray-900" />
-                    Safety protocols
-                  </li>
-                  <li className="flex items-center gap-3 text-gray-700">
-                    <HiOutlineCheckCircle className="w-5 h-5 text-gray-900" />
-                    Troubleshooting tips
-                  </li>
-                </ul>
-                <button className="w-full bg-[#F4E6D7] text-gray-900 py-3 px-6 rounded-lg font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300">
-                  Book Session - ₹1000
-                </button>
-              </div>
+              ))}
             </div>
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-lg text-gray-600 mb-6">All consultation sessions include project file review and personalized recommendations</p>
-            <button className="bg-[#2C5530] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#E67E22] transition-all duration-300 inline-flex items-center gap-2">
-              <HiOutlinePhone className="w-5 h-5" />
-              Call for Expert Consultation: 095866 60214
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Craft Community CTA */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2C5530] to-gray-900"></div>
-        <div className="absolute inset-0">
-          <Image 
-            src="/images/business-10.jpg" 
-            alt="Indian textile patterns translated to paper craft designs"
-            fill
-            className="object-cover opacity-20"
-            unoptimized
-          />
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                Join Our Craft
-                <span className="block text-[#E67E22]">Community</span>
-              </h2>
-              <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                Connect with fellow precision crafters, share your projects, get expert tips, and stay updated on the latest CNC techniques for scrapbooking.
-              </p>
-
-              <div className="grid gap-6 mb-8">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <HiOutlineUserGroup className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">Monthly Project Showcases</h3>
-                    <p className="text-gray-300">Share your precision-cut creations with the community</p>
-                  </div>
+          {/* Step Content */}
+          <div className="bg-gray-50 rounded-3xl p-8 lg:p-12">
+            {currentStep === 1 && (
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-[#2D3748] mb-8">What type of project do you need?</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {projectTypes.map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => handleInputChange('projectType', type)}
+                      className={`p-6 rounded-xl text-left transition-all duration-200 transform hover:scale-102 ${
+                        formData.projectType === type
+                          ? 'bg-[#2D3748] text-gray-900 shadow-lg'
+                          : 'bg-white border-2 border-gray-200 hover:border-[#F7931E] text-gray-700'
+                      }`}
+                    >
+                      <div className="font-semibold">{type}</div>
+                    </button>
+                  ))}
                 </div>
+              </div>
+            )}
 
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <HiOutlineEnvelope className="w-6 h-6 text-white" />
-                  </div>
+            {currentStep === 2 && (
+              <div className="space-y-8">
+                <h3 className="text-2xl font-bold text-[#2D3748] mb-8">Project Specifications</h3>
+                <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-lg font-semibold text-white">Expert Tips Newsletter</h3>
-                    <p className="text-gray-300">Weekly technical insights and design inspiration</p>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Preferred Material</label>
+                    <div className="space-y-2">
+                      {materials.map((material) => (
+                        <button
+                          key={material}
+                          onClick={() => handleInputChange('material', material)}
+                          className={`w-full p-3 rounded-lg text-left transition-all duration-200 ${
+                            formData.material === material
+                              ? 'bg-[#2D3748] text-white'
+                              : 'bg-white border border-gray-300 hover:border-[#F7931E] text-gray-700'
+                          }`}
+                        >
+                          {material}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <HiOutlineBolt className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">Early Workshop Access</h3>
-                    <p className="text-gray-300">Priority booking for new workshops and techniques</p>
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">Dimensions (L x W x H)</label>
+                      <input
+                        type="text"
+                        value={formData.dimensions}
+                        onChange={(e) => handleInputChange('dimensions', e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                        placeholder="e.g., 12cm x 8cm x 3mm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">Quantity Needed</label>
+                      <input
+                        type="number"
+                        value={formData.quantity}
+                        onChange={(e) => handleInputChange('quantity', e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                        placeholder="How many pieces?"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">Timeline</label>
+                      <select
+                        value={formData.timeline}
+                        onChange={(e) => handleInputChange('timeline', e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                      >
+                        <option value="">Select timeline</option>
+                        <option value="rush">Rush (1-2 days)</option>
+                        <option value="standard">Standard (3-5 days)</option>
+                        <option value="flexible">Flexible (1-2 weeks)</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20">
-              <h3 className="text-3xl font-bold text-white mb-6">Join the Community</h3>
-              <form className="space-y-6">
-                <div>
-                  <input 
-                    type="text" 
-                    placeholder="Your Name"
-                    className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-[#E67E22] focus:border-transparent transition-all backdrop-blur-sm"
-                  />
+            {currentStep === 3 && (
+              <div className="space-y-8">
+                <h3 className="text-2xl font-bold text-[#2D3748] mb-8">Contact Information</h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">Full Name *</label>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                        placeholder="Your name"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">Email Address *</label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                        placeholder="your@email.com"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">Phone Number *</label>
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                        placeholder="+91 98765 43210"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Project Description</label>
+                    <textarea
+                      value={formData.description}
+                      onChange={(e) => handleInputChange('description', e.target.value)}
+                      rows={8}
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                      placeholder="Describe your project in detail. Include any specific design requirements, reference images, or special instructions..."
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input 
-                    type="email" 
-                    placeholder="Email Address"
-                    className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-[#E67E22] focus:border-transparent transition-all backdrop-blur-sm"
-                  />
-                </div>
-                <div>
-                  <select className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white focus:ring-2 focus:ring-[#E67E22] focus:border-transparent transition-all backdrop-blur-sm">
-                    <option value="" className="text-gray-900">Experience Level</option>
-                    <option value="beginner" className="text-gray-900">Beginner Crafter</option>
-                    <option value="intermediate" className="text-gray-900">Intermediate</option>
-                    <option value="advanced" className="text-gray-900">Advanced/Professional</option>
-                    <option value="business" className="text-gray-900">Business Owner</option>
-                  </select>
-                </div>
-                <div>
-                  <textarea 
-                    placeholder="Tell us about your crafting interests..."
-                    rows={3}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-[#E67E22] focus:border-transparent transition-all backdrop-blur-sm resize-none"
-                  ></textarea>
-                </div>
-                <button 
-                  type="submit"
-                  className="w-full bg-[#E67E22] text-white py-4 px-6 rounded-lg font-semibold hover:bg-white hover:text-[#E67E22] transition-all duration-300 flex items-center justify-center gap-2 group"
+              </div>
+            )}
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-12">
+              {currentStep > 1 && (
+                <button
+                  onClick={prevStep}
+                  className="px-8 py-3 border-2 border-[#2D3748] text-[#2D3748] font-semibold rounded-xl hover:bg-[#2D3748] hover:text-white transition-all duration-300"
                 >
-                  Join Craft Community
-                  <HiOutlineArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  Previous Step
                 </button>
-              </form>
+              )}
+              <div className="ml-auto">
+                {currentStep < 3 ? (
+                  <button
+                    onClick={nextStep}
+                    disabled={currentStep === 1 && !formData.projectType}
+                    className="px-8 py-3 bg-[#2D3748] text-white font-semibold rounded-xl hover:bg-[#F7931E] transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  >
+                    Next Step
+                  </button>
+                ) : (
+                  <button className="px-8 py-3 bg-[#F7931E] text-gray-900 font-semibold rounded-xl hover:bg-[#2D3748] transition-all duration-300 transform hover:scale-105">
+                    Submit Project Request
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* Contact Methods Visual */}
+      <section className="py-32 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6">
+              Multiple Ways to Connect
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Choose the communication method that works best for you
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Phone Contact */}
+            <div className="group">
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-l-4 border-[#F7931E]">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#F7931E] to-[#E53E3E] rounded-2xl flex items-center justify-center">
+                    <HiOutlinePhone className="h-8 w-8 text-gray-900" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-bold text-[#2D3748]">Call Directly</h3>
+                    <p className="text-gray-600">Immediate assistance</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="text-2xl font-bold text-[#2D3748]">095866 60214</div>
+                  <p className="text-gray-600">
+                    Speak directly with our CNC specialists for instant quotes and technical advice
+                  </p>
+                  <a 
+                    href="tel:09586660214"
+                    className="inline-flex items-center text-[#F7931E] font-semibold hover:text-[#2D3748] transition-colors duration-200"
+                  >
+                    Call Now
+                    <HiOutlineArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Visit Workshop */}
+            <div className="group">
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-l-4 border-[#2D3748]">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#2D3748] to-[#E53E3E] rounded-2xl flex items-center justify-center">
+                    <HiOutlineMapPin className="h-8 w-8 text-gray-900" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-bold text-[#2D3748]">Visit Workshop</h3>
+                    <p className="text-gray-600">See our process live</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="text-sm font-semibold text-[#2D3748]">
+                    Shyamved Industrial Estate, 57, Sardar Patel Ring Rd
+                  </div>
+                  <p className="text-gray-600">
+                    Tour our facility, see CNC machines in action, and discuss your project in person
+                  </p>
+                  <button 
+                    onClick={() => document.getElementById('workshop-hours').scrollIntoView({ behavior: 'smooth' })}
+                    className="inline-flex items-center text-[#F7931E] font-semibold hover:text-[#2D3748] transition-colors duration-200"
+                  >
+                    Check Hours
+                    <HiOutlineArrowRight className="ml-2 h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Email Contact */}
+            <div className="group">
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-l-4 border-[#E53E3E]">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#E53E3E] to-[#F7931E] rounded-2xl flex items-center justify-center">
+                    <HiOutlineEnvelope className="h-8 w-8 text-gray-900" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-bold text-[#2D3748]">Send Details</h3>
+                    <p className="text-gray-600">Upload designs & specs</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="text-lg font-semibold text-[#2D3748]">info@kalacarv.com</div>
+                  <p className="text-gray-600">
+                    Send detailed project requirements, design files, and reference images
+                  </p>
+                  <a 
+                    href="mailto:info@kalacarv.com"
+                    className="inline-flex items-center text-[#F7931E] font-semibold hover:text-[#2D3748] transition-colors duration-200"
+                  >
+                    Compose Email
+                    <HiOutlineArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Workshop Image */}
+          <div className="mt-20">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl">
+              <Image 
+                src="/images/business-4.jpg"
+                alt="Modern workshop interior with CNC machines and organized tools"
+                width={1200}
+                height={600}
+                className="w-full h-96 object-cover"
+                unoptimized
+              />
+              <div className="p-8 text-center">
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  State-of-the-Art CNC Workshop
+                </h3>
+                <p className="text-gray-300 max-w-2xl mx-auto">
+                  Visit our fully equipped workshop in Ahmedabad to see precision cutting technology in action 
+                  and discuss your project requirements with our experienced team.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Workshop Hours Calendar */}
+      <section id="workshop-hours" className="py-32 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6">
+              Workshop Hours & Availability
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Plan your visit or call during our operating hours for immediate assistance
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Hours Display */}
+            <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-lg">
+              <div className="flex items-center mb-8">
+                <HiOutlineClock className="h-8 w-8 text-[#F7931E] mr-4" />
+                <h3 className="text-2xl font-bold text-[#2D3748]">Operating Hours</h3>
+              </div>
+              
+              <div className="space-y-4">
+                {[
+                  { day: 'Monday - Saturday', hours: '9:00 AM - 7:00 PM', status: 'Open' },
+                  { day: 'Sunday', hours: '10:00 AM - 6:00 PM', status: 'Open' }
+                ].map((schedule, index) => (
+                  <div key={index} className="flex justify-between items-center p-4 bg-white rounded-xl border border-gray-200">
+                    <div>
+                      <div className="font-semibold text-[#2D3748]">{schedule.day}</div>
+                      <div className="text-sm text-gray-600">{schedule.hours}</div>
+                    </div>
+                    <div className="flex items-center">
+                      <HiOutlineCheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                      <span className="text-green-600 font-medium">{schedule.status}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 p-6 bg-[#F7931E]/10 rounded-xl border border-[#F7931E]/20">
+                <h4 className="font-bold text-[#2D3748] mb-2">Current Status</h4>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-3"></div>
+                  <span className="text-green-700 font-medium">Open · Closes 7 PM</span>
+                </div>
+                <p className="text-sm text-gray-600 mt-2">
+                  Walk-ins welcome! Call ahead for complex consultations.
+                </p>
+              </div>
+
+              <div className="mt-8">
+                <h4 className="font-bold text-[#2D3748] mb-4">Quick Contact</h4>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href="tel:09586660214"
+                    className="flex-1 bg-[#2D3748] text-gray-900 text-center py-3 px-6 rounded-xl hover:bg-[#F7931E] transition-all duration-300 font-semibold"
+                  >
+                    Call Now
+                  </a>
+                  <a 
+                    href="https://maps.google.com/search/Shyamved+Industrial+Estate+Sardar+Patel+Ring+Road+Ahmedabad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 border-2 border-[#2D3748] text-[#2D3748] text-center py-3 px-6 rounded-xl hover:bg-[#2D3748] hover:text-white transition-all duration-300 font-semibold"
+                  >
+                    Get Directions
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Location Image & Info */}
+            <div className="space-y-8">
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl">
+                <Image 
+                  src="/images/business-7.jpg"
+                  alt="Industrial workshop exterior with modern signage"
+                  width={600}
+                  height={400}
+                  className="w-full h-64 object-cover"
+                  unoptimized
+                />
+              </div>
+
+              <div className="bg-gradient-to-br from-[#2D3748] to-[#E53E3E] rounded-3xl p-8 text-white">
+                <h4 className="text-xl font-bold mb-4">Workshop Location</h4>
+                <div className="space-y-3">
+                  <div className="flex items-start">
+                    <HiOutlineMapPin className="h-5 w-5 mt-1 mr-3 flex-shrink-0" />
+                    <div>
+                      <div className="font-semibold">Shyamved Industrial Estate</div>
+                      <div className="text-sm opacity-90">
+                        57, Sardar Patel Ring Rd, nr. Gappa garden restaurant
+                      </div>
+                      <div className="text-sm opacity-90">
+                        Nana Chiloda, Ahmedabad, Gujarat 382330
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-white/20">
+                  <h5 className="font-semibold mb-2">What to Expect:</h5>
+                  <ul className="text-sm space-y-1 opacity-90">
+                    <li>• Free parking available</li>
+                    <li>• See CNC machines in operation</li>
+                    <li>• Material samples on display</li>
+                    <li>• Instant quote consultations</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Consultation Booking */}
+      <section className="py-32 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2D3748] mb-6">
+              Book Workshop Consultation
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Schedule a dedicated time to discuss your project with our CNC specialists
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Booking Form */}
+            <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl">
+              <h3 className="text-2xl font-bold text-[#2D3748] mb-8">Schedule Your Visit</h3>
+              
+              <div className="space-y-6">
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Preferred Date</label>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Preferred Time</label>
+                    <select
+                      value={selectedTime}
+                      onChange={(e) => setSelectedTime(e.target.value)}
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                    >
+                      <option value="">Select time</option>
+                      {timeSlots.map(time => (
+                        <option key={time} value={time}>{time}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Your Name</label>
+                    <input
+                      type="text"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                      placeholder="Full name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Phone Number</label>
+                    <input
+                      type="tel"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                      placeholder="+91 98765 43210"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Email Address</label>
+                  <input
+                    type="email"
+                    className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Consultation Purpose</label>
+                  <div className="space-y-2">
+                    {[
+                      'Project Quote & Timeline',
+                      'Material Selection Advice',
+                      'Design Feasibility Review',
+                      'Workshop Tour & Capabilities',
+                      'Technical Specifications Discussion'
+                    ].map((purpose) => (
+                      <label key={purpose} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 text-[#2D3748] focus:ring-[#2D3748] border-gray-300 rounded"
+                        />
+                        <span className="ml-3 text-sm text-gray-700">{purpose}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Additional Notes</label>
+                  <textarea
+                    rows={4}
+                    className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2D3748] focus:border-transparent"
+                    placeholder="Tell us about your project, bring reference materials, specific requirements..."
+                  />
+                </div>
+
+                <button className="w-full bg-[#2D3748] text-gray-900 font-bold py-4 px-8 rounded-xl hover:bg-[#F7931E] transition-all duration-300 transform hover:scale-105">
+                  Confirm Consultation Booking
+                </button>
+              </div>
+            </div>
+
+            {/* Benefits & Process */}
+            <div className="space-y-8">
+              <div className="bg-gradient-to-br from-[#F7931E]/10 to-[#E53E3E]/10 rounded-3xl p-8">
+                <h4 className="text-xl font-bold text-[#2D3748] mb-6">What to Expect During Your Visit</h4>
+                <div className="space-y-4">
+                  {[
+                    { step: '1', title: 'Workshop Tour', desc: 'See our CNC machines and material inventory' },
+                    { step: '2', title: 'Project Discussion', desc: 'Review your requirements with our specialists' },
+                    { step: '3', title: 'Material Selection', desc: 'Touch and compare different cutting materials' },
+                    { step: '4', title: 'Accurate Quote', desc: 'Receive detailed pricing and timeline' }
+                  ].map((item) => (
+                    <div key={item.step} className="flex items-start">
+                      <div className="w-8 h-8 bg-[#2D3748] text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
+                        {item.step}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-[#2D3748]">{item.title}</div>
+                        <div className="text-sm text-gray-300">{item.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden">
+                <Image 
+                  src="/images/business-10.jpg"
+                  alt="Artisan examining precision-cut piece with measuring tools"
+                  width={600}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                  unoptimized
+                />
+                <div className="p-6">
+                  <h4 className="text-lg font-bold text-white mb-2">Expert Consultation</h4>
+                  <p className="text-gray-300 text-sm">
+                    Our experienced team will assess your project requirements and provide 
+                    professional recommendations for materials, techniques, and finishing options.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-200">
+                <h4 className="text-xl font-bold text-[#2D3748] mb-4">Consultation Benefits</h4>
+                <ul className="space-y-3">
+                  {[
+                    'Free detailed project assessment',
+                    'Material cost optimization advice',
+                    'Technical feasibility confirmation',
+                    'Accurate timeline estimates',
+                    'Design modification suggestions'
+                  ].map((benefit) => (
+                    <li key={benefit} className="flex items-center">
+                      <HiOutlineCheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                      <span className="text-gray-700">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }
