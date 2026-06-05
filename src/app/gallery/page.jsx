@@ -2,150 +2,170 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { HiOutlineSparkles, HiOutlineHeart, HiOutlineUserGroup, HiOutlineBolt, HiOutlineArrowRight } from 'react-icons/hi2'
+import { HiOutlineHeart, HiOutlineSparkles, HiOutlineArrowRight, HiOutlineCheckCircle } from 'react-icons/hi2'
 
 export default function Gallery() {
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedProject, setSelectedProject] = useState(null)
 
   const categories = [
-    { id: 'all', label: 'All Projects', count: 42 },
-    { id: 'scrapbook', label: 'Scrapbook Designs', count: 18 },
-    { id: 'paper', label: 'Paper Cutting', count: 15 },
-    { id: 'custom', label: 'Custom Orders', count: 9 }
+    { id: 'all', name: 'All Projects', count: 48 },
+    { id: 'wedding', name: 'Wedding Albums', count: 18 },
+    { id: 'baby', name: 'Baby Scrapbooks', count: 12 },
+    { id: 'custom', name: 'Custom Cuts', count: 15 },
+    { id: 'decorative', name: 'Decorative Elements', count: 8 }
   ]
 
   const projects = [
     {
       id: 1,
-      title: 'Intricate Wedding Album Covers',
-      category: 'scrapbook',
-      material: 'Premium Cardstock',
-      technique: 'Laser Cut',
-      complexity: 'High',
-      image: '/images/business-4.jpg'
+      title: "Intricate Wedding Memory Album",
+      category: "wedding",
+      client: "Priya & Rajesh",
+      description: "Precision-cut mandala patterns with gold foil accents",
+      image: "/images/business-4.jpg",
+      tags: ["Laser Cut", "Gold Foil", "Custom Design"],
+      complexity: "High",
+      materials: ["Premium Cardstock", "Acrylic", "Wood Veneer"]
     },
     {
       id: 2,
-      title: 'Custom Birthday Card Set',
-      category: 'paper',
-      material: 'Textured Paper',
-      technique: 'CNC Cut',
-      complexity: 'Medium',
-      image: '/images/business-6.jpg'
+      title: "Custom Baby Milestone Cards",
+      category: "baby",
+      client: "Anita K.",
+      description: "Delicate animal cutouts with personalized engravings",
+      image: "/images/business-6.jpg",
+      tags: ["Engraved", "Cute Animals", "Milestone"],
+      complexity: "Medium",
+      materials: ["Birch Wood", "Colored Cardstock"]
     },
     {
       id: 3,
-      title: 'Corporate Gift Boxes',
-      category: 'custom',
-      material: 'Wood Veneer',
-      technique: 'Precision Cut',
-      complexity: 'High',
-      image: '/images/business-7.jpg'
+      title: "Geometric Pattern Collection",
+      category: "decorative",
+      client: "Craft Studio Ahmedabad",
+      description: "Modern geometric elements for contemporary scrapbooks",
+      image: "/images/business-7.jpg",
+      tags: ["Geometric", "Modern", "Batch Order"],
+      complexity: "Medium",
+      materials: ["Acrylic", "Metallic Cardstock"]
     },
     {
       id: 4,
-      title: 'Decorative Photo Frames',
-      category: 'scrapbook',
-      material: 'Acrylic',
-      technique: 'Laser Engrave',
-      complexity: 'Medium',
-      image: '/images/business-8.jpg'
+      title: "Traditional Paisley Borders",
+      category: "custom",
+      client: "Meera P.",
+      description: "Intricate paisley patterns inspired by Gujarati art",
+      image: "/images/business-8.jpg",
+      tags: ["Traditional", "Paisley", "Cultural"],
+      complexity: "High",
+      materials: ["Wood", "Colored Paper", "Fabric"]
     },
     {
       id: 5,
-      title: 'Event Invitation Suite',
-      category: 'paper',
-      material: 'Specialty Paper',
-      technique: 'Multi-layer Cut',
-      complexity: 'High',
-      image: '/images/business-2.jpg'
+      title: "3D Layered Flowers",
+      category: "decorative",
+      client: "Ravi's Craft Corner",
+      description: "Multi-layered flower cutouts with precise assembly guides",
+      image: "/images/business-3.jpg",
+      tags: ["3D", "Layered", "Floral"],
+      complexity: "High",
+      materials: ["Cardstock", "Foam Board", "Vellum"]
     },
     {
       id: 6,
-      title: 'Memory Book Elements',
-      category: 'scrapbook',
-      material: 'Mixed Media',
-      technique: 'Precision Cut',
-      complexity: 'Medium',
-      image: '/images/business-3.jpg'
+      title: "Personalized Name Cutouts",
+      category: "custom",
+      client: "Various Clients",
+      description: "Custom typography cuts in multiple languages including Gujarati",
+      image: "/images/business-2.jpg",
+      tags: ["Typography", "Multilingual", "Personal"],
+      complexity: "Low",
+      materials: ["Wood", "Acrylic", "Cardstock"]
     }
   ]
 
-  const filteredProjects = activeFilter === 'all' 
+  const filteredProjects = selectedCategory === 'all' 
     ? projects 
-    : projects.filter(project => project.category === activeFilter)
-
-  const complexityColors = {
-    'High': 'text-red-600 bg-red-50',
-    'Medium': 'text-orange-600 bg-orange-50',
-    'Low': 'text-green-600 bg-green-50'
-  }
+    : projects.filter(project => project.category === selectedCategory)
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Geometric Overlay */}
-      <section className="relative py-32 bg-gradient-to-br from-[#E8B86D] to-gray-800 overflow-hidden">
-        {/* Geometric Pattern Overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 border-4 border-white rotate-45"></div>
-          <div className="absolute top-20 right-20 w-24 h-24 border-2 border-white rotate-12"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 border-3 border-white -rotate-12"></div>
-          <div className="absolute bottom-32 right-1/3 w-20 h-20 border-2 border-white rotate-45"></div>
+    <main className="pt-16 lg:pt-20">
+      {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#E67E22] to-gray-900"></div>
+        <div className="absolute inset-0 opacity-20">
+          <div className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900">
+            <Image
+              src="/images/business-1.jpg"
+              alt="CNC Workshop Gallery"
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          </div>
         </div>
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <HiOutlineSparkles className="text-4xl text-white" />
-              <span className="text-white/90 font-medium tracking-wide">PROJECT SHOWCASE</span>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-white">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3 mb-6">
+              <HiOutlineSparkles className="w-8 h-8 text-[#F39C12]" />
+              <span className="text-[#F39C12] font-medium tracking-wide">PROJECT SHOWCASE</span>
             </div>
-            <h1 className="text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
-              Precision in
-              <span className="block text-[#2D4A3E]">Every Cut</span>
+            
+            <h1 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+              Precision Meets
+              <span className="block text-[#F39C12]">Creativity</span>
             </h1>
-            <p className="text-xl text-white/90 mb-12 leading-relaxed max-w-3xl mx-auto">
-              Explore our gallery of custom laser cutting and CNC projects. From intricate scrapbook designs to precision corporate work, see how we transform creative visions into reality.
+            
+            <p className="text-xl lg:text-2xl text-gray-200 mb-8 max-w-2xl">
+              Explore our portfolio of custom CNC cutting projects that showcase the perfect blend 
+              of technical precision and artistic vision.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">42+</div>
-                <div className="text-white/80">Projects Completed</div>
+            
+            <div className="flex flex-wrap gap-6 items-center">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                <HiOutlineCheckCircle className="w-5 h-5 text-[#F39C12]" />
+                <span className="font-medium">48+ Completed Projects</span>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">15+</div>
-                <div className="text-white/80">Material Types</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">4.3★</div>
-                <div className="text-white/80">Customer Rating</div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
+                <HiOutlineHeart className="w-5 h-5 text-[#F39C12]" />
+                <span className="font-medium">100% Client Satisfaction</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Filter Navigation */}
-      <section className="py-16 bg-white relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#E8B86D]/10 to-transparent"></div>
-        
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
+      {/* Category Filter */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Browse by Category
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Filter through our diverse portfolio to find inspiration for your next project
+            </p>
+          </div>
+
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             {categories.map((category) => (
               <button
                 key={category.id}
-                onClick={() => setActiveFilter(category.id)}
-                className={`px-8 py-4 rounded-2xl font-semibold transition-all duration-300 group ${
-                  activeFilter === category.id
-                    ? 'bg-[#2D4A3E] text-white shadow-lg shadow-[#2D4A3E]/20'
-                    : 'bg-gray-100 text-gray-700 hover:bg-[#E8B86D] hover:text-white'
+                onClick={() => setSelectedCategory(category.id)}
+                className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
+                  selectedCategory === category.id
+                    ? 'bg-[#2C3E50] text-white shadow-xl shadow-[#2C3E50]/20'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <span className="flex items-center gap-3">
-                  {category.label}
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    activeFilter === category.id 
-                      ? 'bg-white/20 text-white' 
-                      : 'bg-white text-gray-600 group-hover:bg-white/20 group-hover:text-white'
+                <span className="flex items-center gap-2">
+                  {category.name}
+                  <span className={`text-sm px-2 py-1 rounded-full ${
+                    selectedCategory === category.id
+                      ? 'bg-white/20 text-white'
+                      : 'bg-[#F39C12]/20 text-[#F39C12]'
                   }`}>
                     {category.count}
                   </span>
@@ -154,150 +174,222 @@ export default function Gallery() {
             ))}
           </div>
 
-          {/* Featured Stats */}
-          <div className="grid md:grid-cols-3 gap-8 mb-20">
-            <div className="text-center p-8 bg-gradient-to-br from-[#E8B86D]/10 to-transparent rounded-3xl">
-              <HiOutlineBolt className="text-4xl text-[#2D4A3E] mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Precision Cutting</h3>
-              <p className="text-gray-600">State-of-the-art CNC and laser equipment for perfect results</p>
-            </div>
-            <div className="text-center p-8 bg-gradient-to-br from-[#C7956D]/10 to-transparent rounded-3xl">
-              <HiOutlineHeart className="text-4xl text-[#2D4A3E] mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Custom Designs</h3>
-              <p className="text-gray-600">Bring your unique vision to life with personalized cutting services</p>
-            </div>
-            <div className="text-center p-8 bg-gradient-to-br from-[#E8B86D]/20 to-transparent rounded-3xl">
-              <HiOutlineUserGroup className="text-4xl text-[#2D4A3E] mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Expert Team</h3>
-              <p className="text-gray-600">Professional craftspeople dedicated to quality and precision</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Project Gallery Grid */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+          {/* Projects Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project, index) => (
               <div
                 key={project.id}
-                className={`group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
-                  index % 3 === 0 ? 'lg:translate-y-8' : 
-                  index % 3 === 1 ? 'lg:-translate-y-4' : ''
-                }`}
+                className="group cursor-pointer"
+                onClick={() => setSelectedProject(project)}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                {/* Geometric Frame Overlay */}
-                <div className="absolute top-4 left-4 w-16 h-16 border-2 border-[#2D4A3E]/20 rotate-45 z-10 group-hover:border-[#2D4A3E]/40 transition-colors duration-300"></div>
-                
-                <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 aspect-square">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    unoptimized
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  {/* Complexity Badge */}
-                  <div className="absolute top-6 right-6">
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${complexityColors[project.complexity]}`}>
-                      {project.complexity}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-8">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#2D4A3E] transition-colors duration-300">
-                    {project.title}
-                  </h3>
-                  
-                  <div className="space-y-2 mb-6">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Material:</span>
-                      <span className="font-medium text-gray-900">{project.material}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Technique:</span>
-                      <span className="font-medium text-gray-900">{project.technique}</span>
+                <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      unoptimized
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
+                      <div className="flex items-center gap-2 text-white">
+                        <HiOutlineSparkles className="w-5 h-5" />
+                        <span className="font-medium">View Details</span>
+                      </div>
                     </div>
                   </div>
-
-                  <button className="w-full bg-gradient-to-r from-[#2D4A3E] to-[#C7956D] text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:shadow-[#2D4A3E]/20 transition-all duration-300 group/btn">
-                    <span className="flex items-center justify-center gap-2">
-                      View Details
-                      <HiOutlineArrowRight className="group-hover/btn:translate-x-1 transition-transform duration-300" />
-                    </span>
-                  </button>
+                  
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#2C3E50] transition-colors">
+                        {project.title}
+                      </h3>
+                      <span className={`text-sm px-2 py-1 rounded-full font-medium ${
+                        project.complexity === 'High' 
+                          ? 'bg-red-100 text-red-700'
+                          : project.complexity === 'Medium'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : 'bg-green-100 text-green-700'
+                      }`}>
+                        {project.complexity}
+                      </span>
+                    </div>
+                    
+                    <p className="text-gray-600 mb-4">{project.description}</p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.slice(0, 2).map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 bg-[#F39C12]/10 text-[#F39C12] rounded-lg font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {project.tags.length > 2 && (
+                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-lg">
+                          +{project.tags.length - 2} more
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                      <span>Client: {project.client}</span>
+                      <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Load More Section */}
-          <div className="text-center mt-20">
-            <div className="inline-flex items-center gap-4 p-8 bg-white rounded-3xl shadow-lg">
-              <div className="text-center">
-                <p className="text-gray-600 mb-4">Showing {filteredProjects.length} of {categories.find(c => c.id === activeFilter)?.count || 42} projects</p>
-                <button className="bg-[#2D4A3E] text-white px-8 py-4 rounded-2xl font-semibold hover:bg-[#C7956D] transition-all duration-300 shadow-lg hover:shadow-xl">
-                  Load More Projects
+      {/* Project Modal */}
+      {selectedProject && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-auto">
+            <div className="relative aspect-[16/9] bg-gradient-to-br from-gray-800 to-gray-900">
+              <Image
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                fill
+                className="object-cover"
+                unoptimized
+              />
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="p-8">
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedProject.title}</h2>
+                  <p className="text-lg text-gray-600">Client: {selectedProject.client}</p>
+                </div>
+                <span className={`text-sm px-3 py-1 rounded-full font-medium ${
+                  selectedProject.complexity === 'High' 
+                    ? 'bg-red-100 text-red-700'
+                    : selectedProject.complexity === 'Medium'
+                    ? 'bg-yellow-100 text-yellow-700'
+                    : 'bg-green-100 text-green-700'
+                }`}>
+                  {selectedProject.complexity} Complexity
+                </span>
+              </div>
+              
+              <p className="text-lg text-gray-700 mb-6">{selectedProject.description}</p>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-[#F39C12]/10 text-[#F39C12] rounded-lg font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Materials Used</h3>
+                  <ul className="space-y-2">
+                    {selectedProject.materials.map((material) => (
+                      <li key={material} className="flex items-center gap-2 text-gray-700">
+                        <HiOutlineCheckCircle className="w-5 h-5 text-[#F39C12]" />
+                        {material}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <button className="w-full bg-[#2C3E50] text-white py-4 px-6 rounded-2xl font-medium hover:bg-[#34495e] transition-colors flex items-center justify-center gap-2">
+                  Start Your Custom Project
+                  <HiOutlineArrowRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      )}
 
       {/* Process Showcase */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#E8B86D]/5 to-transparent rounded-full -translate-x-48 -translate-y-48"></div>
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-tl from-[#C7956D]/10 to-transparent rounded-full translate-x-40 translate-y-40"></div>
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">Our Cutting Process</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              From concept to completion, see how we bring precision to every project through our proven workflow
-            </p>
-          </div>
-
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-20 h-20 border-4 border-[#2D4A3E]/20 rotate-12"></div>
-              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl aspect-[4/3]">
-                <Image
-                  src="/images/business-8.jpg"
-                  alt="CNC cutting process"
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <HiOutlineSparkles className="w-8 h-8 text-[#F39C12]" />
+                <span className="text-[#F39C12] font-medium tracking-wide">OUR PROCESS</span>
+              </div>
+              
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+                From Vision to
+                <span className="block text-[#E67E22]">Precision Reality</span>
+              </h2>
+              
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">1</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Design Consultation</h3>
+                    <p className="text-gray-600">We discuss your vision and optimize it for CNC precision cutting</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">2</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Material Selection</h3>
+                    <p className="text-gray-600">Choose from our premium materials or bring your own</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">3</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Precision Cutting</h3>
+                    <p className="text-gray-600">Our CNC machines deliver perfect cuts every time</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">4</div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Quality Finishing</h3>
+                    <p className="text-gray-600">Final touches and quality checks ensure perfection</p>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div className="space-y-8">
-              <div className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-[#2D4A3E] text-white rounded-xl flex items-center justify-center font-bold">1</div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Design Consultation</h3>
-                  <p className="text-gray-600">We review your concept and recommend the best materials and cutting techniques</p>
-                </div>
+            
+            <div className="relative">
+              <div className="aspect-square relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900">
+                <Image
+                  src="/images/business-8.jpg"
+                  alt="CNC Cutting Process"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
-
-              <div className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-[#C7956D] text-white rounded-xl flex items-center justify-center font-bold">2</div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Precision Setup</h3>
-                  <p className="text-gray-600">Our CNC and laser equipment is calibrated for your specific material requirements</p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-[#E8B86D] text-white rounded-xl flex items-center justify-center font-bold">3</div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Quality Cutting</h3>
-                  <p className="text-gray-600">Professional-grade cutting with attention to every detail and finishing touch</p>
+              
+              <div className="absolute -bottom-6 -right-6 bg-[#F39C12] text-white p-6 rounded-2xl shadow-xl">
+                <div className="text-center">
+                  <div className="text-2xl font-bold">100%</div>
+                  <div className="text-sm">Precision</div>
                 </div>
               </div>
             </div>
@@ -306,29 +398,25 @@ export default function Gallery() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-[#E8B86D] relative overflow-hidden">
-        {/* Geometric Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-32 h-32 border-4 border-white rotate-45"></div>
-          <div className="absolute bottom-0 right-1/4 w-40 h-40 border-3 border-white -rotate-12"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-5xl font-bold text-white mb-8">Ready to Start Your Project?</h2>
-          <p className="text-xl text-white/90 mb-12">
-            Let's discuss your custom cutting needs and bring your creative vision to life with precision craftsmanship
+      <section className="py-24 bg-gradient-to-br from-[#E67E22] to-gray-800">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+            Ready to Create Your Masterpiece?
+          </h2>
+          <p className="text-xl text-gray-200 mb-8">
+            Let's bring your creative vision to life with our precision CNC cutting services
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="bg-[#2D4A3E] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#2D4A3E] transition-all duration-300 shadow-xl hover:shadow-2xl">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-white text-[#2C3E50] px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
               Get Custom Quote Today
+              <HiOutlineArrowRight className="w-5 h-5" />
             </button>
-            <button className="bg-white text-[#2D4A3E] px-10 py-5 rounded-2xl font-bold text-lg hover:bg-[#2D4A3E] hover:text-white transition-all duration-300 shadow-xl hover:shadow-2xl">
+            <button className="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#2C3E50] transition-colors">
               Call 095866 60214
             </button>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }
