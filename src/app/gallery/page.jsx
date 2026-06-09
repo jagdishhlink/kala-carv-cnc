@@ -1,422 +1,429 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useState } from 'react'
-import { HiOutlineHeart, HiOutlineSparkles, HiOutlineArrowRight, HiOutlineCheckCircle } from 'react-icons/hi2'
+import { HiOutlineSparkles, HiOutlineBolt, HiOutlineCheckCircle, HiOutlineArrowRight } from 'react-icons/hi2'
+
+const fadeInUp = { 
+  initial: { opacity: 0, y: 30 }, 
+  whileInView: { opacity: 1, y: 0 }, 
+  viewport: { once: true }, 
+  transition: { duration: 0.5 } 
+}
+
+const staggerContainer = { 
+  initial: {}, 
+  whileInView: { transition: { staggerChildren: 0.1 } }, 
+  viewport: { once: true } 
+}
+
+const staggerItem = { 
+  initial: { opacity: 0, y: 20 }, 
+  whileInView: { opacity: 1, y: 0 }, 
+  viewport: { once: true } 
+}
 
 export default function Gallery() {
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [selectedProject, setSelectedProject] = useState(null)
-
-  const categories = [
-    { id: 'all', name: 'All Projects', count: 48 },
-    { id: 'wedding', name: 'Wedding Albums', count: 18 },
-    { id: 'baby', name: 'Baby Scrapbooks', count: 12 },
-    { id: 'custom', name: 'Custom Cuts', count: 15 },
-    { id: 'decorative', name: 'Decorative Elements', count: 8 }
-  ]
-
-  const projects = [
+  const projectCategories = [
     {
-      id: 1,
-      title: "Intricate Wedding Memory Album",
-      category: "wedding",
-      client: "Priya & Rajesh",
-      description: "Precision-cut mandala patterns with gold foil accents",
-      image: "/images/business-4.jpg",
-      tags: ["Laser Cut", "Gold Foil", "Custom Design"],
-      complexity: "High",
-      materials: ["Premium Cardstock", "Acrylic", "Wood Veneer"]
+      title: "Custom Scrapbooking Dies",
+      description: "Intricate paper cutting designs for personalized scrapbook layouts",
+      image: "/images/business-1.jpg",
+      projects: 85
     },
     {
-      id: 2,
-      title: "Custom Baby Milestone Cards",
-      category: "baby",
-      client: "Anita K.",
-      description: "Delicate animal cutouts with personalized engravings",
-      image: "/images/business-6.jpg",
-      tags: ["Engraved", "Cute Animals", "Milestone"],
-      complexity: "Medium",
-      materials: ["Birch Wood", "Colored Cardstock"]
-    },
-    {
-      id: 3,
-      title: "Geometric Pattern Collection",
-      category: "decorative",
-      client: "Craft Studio Ahmedabad",
-      description: "Modern geometric elements for contemporary scrapbooks",
-      image: "/images/business-7.jpg",
-      tags: ["Geometric", "Modern", "Batch Order"],
-      complexity: "Medium",
-      materials: ["Acrylic", "Metallic Cardstock"]
-    },
-    {
-      id: 4,
-      title: "Traditional Paisley Borders",
-      category: "custom",
-      client: "Meera P.",
-      description: "Intricate paisley patterns inspired by Gujarati art",
-      image: "/images/business-8.jpg",
-      tags: ["Traditional", "Paisley", "Cultural"],
-      complexity: "High",
-      materials: ["Wood", "Colored Paper", "Fabric"]
-    },
-    {
-      id: 5,
-      title: "3D Layered Flowers",
-      category: "decorative",
-      client: "Ravi's Craft Corner",
-      description: "Multi-layered flower cutouts with precise assembly guides",
-      image: "/images/business-3.jpg",
-      tags: ["3D", "Layered", "Floral"],
-      complexity: "High",
-      materials: ["Cardstock", "Foam Board", "Vellum"]
-    },
-    {
-      id: 6,
-      title: "Personalized Name Cutouts",
-      category: "custom",
-      client: "Various Clients",
-      description: "Custom typography cuts in multiple languages including Gujarati",
+      title: "Decorative Elements",
+      description: "Precision-cut embellishments and ornamental pieces",
       image: "/images/business-2.jpg",
-      tags: ["Typography", "Multilingual", "Personal"],
-      complexity: "Low",
-      materials: ["Wood", "Acrylic", "Cardstock"]
+      projects: 120
+    },
+    {
+      title: "Paper Craft Templates",
+      description: "Reusable templates for consistent crafting results",
+      image: "/images/business-3.jpg",
+      projects: 95
     }
   ]
 
-  const filteredProjects = selectedCategory === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory)
+  const featuredProjects = [
+    {
+      title: "Wedding Memory Album",
+      category: "Custom Scrapbooking",
+      description: "Intricate lace-pattern borders and custom monogram cutting for a luxury wedding scrapbook project",
+      image: "/images/business-4.jpg",
+      details: ["Cardstock precision cutting", "Custom monogram design", "Decorative border patterns"]
+    },
+    {
+      title: "Baby Book Collection",
+      category: "Paper Crafting",
+      description: "Adorable animal shapes and milestone markers for a complete baby memory book series",
+      image: "/images/business-5.jpg",
+      details: ["Animal-themed cutouts", "Milestone markers", "Textured paper handling"]
+    },
+    {
+      title: "Travel Journal Kit",
+      category: "Custom Templates",
+      description: "World map silhouettes and landmark cutouts for travel enthusiast scrapbookers",
+      image: "/images/business-6.jpg",
+      details: ["Geographic precision", "Landmark replicas", "Multi-layer designs"]
+    },
+    {
+      title: "Holiday Decorations",
+      category: "Seasonal Crafts",
+      description: "Festive ornament patterns and seasonal embellishments for holiday-themed projects",
+      image: "/images/business-7.jpg",
+      details: ["Seasonal motifs", "Ornament patterns", "Festive borders"]
+    },
+    {
+      title: "Corporate Branding",
+      category: "Business Applications",
+      description: "Professional logo cutting and branded elements for corporate scrapbooking needs",
+      image: "/images/business-8.jpg",
+      details: ["Logo precision", "Brand consistency", "Corporate colors"]
+    },
+    {
+      title: "Educational Materials",
+      category: "Learning Tools",
+      description: "Interactive learning elements and educational cutouts for classroom scrapbooking",
+      image: "/images/business-9.jpg",
+      details: ["Educational themes", "Interactive elements", "Durable materials"]
+    }
+  ]
+
+  const capabilities = [
+    { icon: HiOutlineBolt, title: "Precision Cutting", detail: "±0.1mm accuracy" },
+    { icon: HiOutlineSparkles, title: "Complex Designs", detail: "Intricate patterns" },
+    { icon: HiOutlineCheckCircle, title: "Quality Control", detail: "100% inspection" }
+  ]
 
   return (
-    <main className="pt-16 lg:pt-20">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#E67E22] to-gray-900"></div>
-        <div className="absolute inset-0 opacity-20">
-          <div className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900">
-            <Image
-              src="/images/business-1.jpg"
-              alt="CNC Workshop Gallery"
-              fill
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-white">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-3 mb-6">
-              <HiOutlineSparkles className="w-8 h-8 text-[#F39C12]" />
-              <span className="text-[#F39C12] font-medium tracking-wide">PROJECT SHOWCASE</span>
-            </div>
-            
-            <h1 className="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
-              Precision Meets
-              <span className="block text-[#F39C12]">Creativity</span>
+      <section className="relative py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-[#1e40af] to-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center text-white"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm mb-6"
+            >
+              <HiOutlineSparkles className="w-4 h-4 mr-2" />
+              Precision CNC Gallery
+            </motion.div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+              Our CNC Cutting
+              <span className="block bg-gradient-to-r from-[#f59e0b] to-yellow-300 bg-clip-text text-transparent">
+                Masterpieces
+              </span>
             </h1>
-            
-            <p className="text-xl lg:text-2xl text-gray-200 mb-8 max-w-2xl">
-              Explore our portfolio of custom CNC cutting projects that showcase the perfect blend 
-              of technical precision and artistic vision.
+            <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto mb-8">
+              Explore our portfolio of precision-cut scrapbooking projects, custom designs, and innovative crafting solutions that showcase the power of professional CNC technology.
             </p>
-            
-            <div className="flex flex-wrap gap-6 items-center">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <HiOutlineCheckCircle className="w-5 h-5 text-[#F39C12]" />
-                <span className="font-medium">48+ Completed Projects</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <HiOutlineHeart className="w-5 h-5 text-[#F39C12]" />
-                <span className="font-medium">100% Client Satisfaction</span>
-              </div>
-            </div>
-          </div>
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="bg-[#2563eb] text-white px-8 py-4 rounded-xl font-semibold shadow-lg"
+              >
+                Get Custom Quote Today
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20"
+              >
+                View Our Services
+              </motion.button>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Browse by Category
+      {/* Capabilities Overview */}
+      <section className="py-12 sm:py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              Our CNC Capabilities
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Filter through our diverse portfolio to find inspiration for your next project
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
-                  selectedCategory === category.id
-                    ? 'bg-[#2C3E50] text-white shadow-xl shadow-[#2C3E50]/20'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+            <div className="w-16 h-1 bg-[#2563eb] rounded-full mx-auto mb-6"></div>
+          </motion.div>
+          <motion.div 
+            {...staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {capabilities.map((capability, index) => (
+              <motion.div
+                key={index}
+                {...staggerItem}
+                whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+                className="text-center p-6 bg-white rounded-2xl shadow-md"
               >
-                <span className="flex items-center gap-2">
-                  {category.name}
-                  <span className={`text-sm px-2 py-1 rounded-full ${
-                    selectedCategory === category.id
-                      ? 'bg-white/20 text-white'
-                      : 'bg-[#F39C12]/20 text-[#F39C12]'
-                  }`}>
-                    {category.count}
-                  </span>
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
-              <div
-                key={project.id}
-                className="group cursor-pointer"
-                onClick={() => setSelectedProject(project)}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
-                      <div className="flex items-center gap-2 text-white">
-                        <HiOutlineSparkles className="w-5 h-5" />
-                        <span className="font-medium">View Details</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#2C3E50] transition-colors">
-                        {project.title}
-                      </h3>
-                      <span className={`text-sm px-2 py-1 rounded-full font-medium ${
-                        project.complexity === 'High' 
-                          ? 'bg-red-100 text-red-700'
-                          : project.complexity === 'Medium'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-green-100 text-green-700'
-                      }`}>
-                        {project.complexity}
-                      </span>
-                    </div>
-                    
-                    <p className="text-gray-600 mb-4">{project.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.slice(0, 2).map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs px-2 py-1 bg-[#F39C12]/10 text-[#F39C12] rounded-lg font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {project.tags.length > 2 && (
-                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-lg">
-                          +{project.tags.length - 2} more
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <span>Client: {project.client}</span>
-                      <HiOutlineArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
+                <div className="w-16 h-16 bg-[#2563eb]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <capability.icon className="w-8 h-8 text-[#2563eb]" />
                 </div>
-              </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{capability.title}</h3>
+                <p className="text-[#f59e0b] font-medium">{capability.detail}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Project Modal */}
-      {selectedProject && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6">
-          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-auto">
-            <div className="relative aspect-[16/9] bg-gradient-to-br from-gray-800 to-gray-900">
-              <Image
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                fill
-                className="object-cover"
-                unoptimized
-              />
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+      {/* Project Categories */}
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              Project Categories
+            </h2>
+            <div className="w-16 h-1 bg-[#2563eb] rounded-full mx-auto mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover the diverse range of scrapbooking and paper crafting projects we bring to life with precision CNC cutting
+            </p>
+          </motion.div>
+          <motion.div 
+            {...staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {projectCategories.map((category, index) => (
+              <motion.div
+                key={index}
+                {...staggerItem}
+                whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+                className="bg-white rounded-2xl shadow-md overflow-hidden"
               >
-                ×
-              </button>
-            </div>
-            
-            <div className="p-8">
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedProject.title}</h2>
-                  <p className="text-lg text-gray-600">Client: {selectedProject.client}</p>
-                </div>
-                <span className={`text-sm px-3 py-1 rounded-full font-medium ${
-                  selectedProject.complexity === 'High' 
-                    ? 'bg-red-100 text-red-700'
-                    : selectedProject.complexity === 'Medium'
-                    ? 'bg-yellow-100 text-yellow-700'
-                    : 'bg-green-100 text-green-700'
-                }`}>
-                  {selectedProject.complexity} Complexity
-                </span>
-              </div>
-              
-              <p className="text-lg text-gray-700 mb-6">{selectedProject.description}</p>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Tags</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-[#F39C12]/10 text-[#F39C12] rounded-lg font-medium"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 h-48">
+                  <Image
+                    src={category.image}
+                    alt={category.title}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                    unoptimized
+                  />
+                  <div className="absolute top-4 right-4 bg-[#2563eb] text-white text-sm px-3 py-1 rounded-full">
+                    {category.projects}+ Projects
                   </div>
                 </div>
-                
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Materials Used</h3>
-                  <ul className="space-y-2">
-                    {selectedProject.materials.map((material) => (
-                      <li key={material} className="flex items-center gap-2 text-gray-700">
-                        <HiOutlineCheckCircle className="w-5 h-5 text-[#F39C12]" />
-                        {material}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{category.title}</h3>
+                  <p className="text-gray-600 mb-4">{category.description}</p>
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    className="text-[#2563eb] font-medium flex items-center"
+                  >
+                    View Projects <HiOutlineArrowRight className="w-4 h-4 ml-2" />
+                  </motion.button>
                 </div>
-              </div>
-              
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <button className="w-full bg-[#2C3E50] text-white py-4 px-6 rounded-2xl font-medium hover:bg-[#34495e] transition-colors flex items-center justify-center gap-2">
-                  Start Your Custom Project
-                  <HiOutlineArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-      )}
+      </section>
+
+      {/* Featured Projects Gallery */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              Featured Projects
+            </h2>
+            <div className="w-16 h-1 bg-[#2563eb] rounded-full mx-auto mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Explore our most impressive CNC cutting projects that showcase precision, creativity, and technical excellence
+            </p>
+          </motion.div>
+          <motion.div 
+            {...staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {featuredProjects.map((project, index) => (
+              <motion.div
+                key={index}
+                {...staggerItem}
+                whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+                className="bg-white rounded-2xl shadow-md overflow-hidden"
+              >
+                <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 h-56">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                    unoptimized
+                  />
+                  <div className="absolute top-4 left-4 bg-[#f59e0b] text-white text-xs px-2 py-1 rounded-full">
+                    {project.category}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{project.title}</h3>
+                  <p className="text-gray-600 text-sm mb-4">{project.description}</p>
+                  <div className="space-y-2 mb-4">
+                    {project.details.map((detail, detailIndex) => (
+                      <div key={detailIndex} className="flex items-center text-sm">
+                        <HiOutlineCheckCircle className="w-4 h-4 text-[#2563eb] mr-2 flex-shrink-0" />
+                        <span className="text-gray-700">{detail}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-[#2563eb]/10 text-[#2563eb] py-3 rounded-xl font-medium transition-colors duration-200 hover:bg-[#2563eb] hover:text-white"
+                  >
+                    View Project Details
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
       {/* Process Showcase */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <HiOutlineSparkles className="w-8 h-8 text-[#F39C12]" />
-                <span className="text-[#F39C12] font-medium tracking-wide">OUR PROCESS</span>
-              </div>
-              
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
-                From Vision to
-                <span className="block text-[#E67E22]">Precision Reality</span>
-              </h2>
-              
-              <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">1</div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Design Consultation</h3>
-                    <p className="text-gray-600">We discuss your vision and optimize it for CNC precision cutting</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">2</div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Material Selection</h3>
-                    <p className="text-gray-600">Choose from our premium materials or bring your own</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">3</div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Precision Cutting</h3>
-                    <p className="text-gray-600">Our CNC machines deliver perfect cuts every time</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-[#2C3E50] text-white rounded-xl flex items-center justify-center font-bold text-lg">4</div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Quality Finishing</h3>
-                    <p className="text-gray-600">Final touches and quality checks ensure perfection</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="relative">
-              <div className="aspect-square relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900">
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              Our Precision Process
+            </h2>
+            <div className="w-16 h-1 bg-[#2563eb] rounded-full mx-auto mb-6"></div>
+          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl h-96">
                 <Image
-                  src="/images/business-8.jpg"
-                  alt="CNC Cutting Process"
+                  src="/images/business-10.jpg"
+                  alt="CNC cutting process"
                   fill
                   className="object-cover"
                   unoptimized
                 />
               </div>
-              
-              <div className="absolute -bottom-6 -right-6 bg-[#F39C12] text-white p-6 rounded-2xl shadow-xl">
-                <div className="text-center">
-                  <div className="text-2xl font-bold">100%</div>
-                  <div className="text-sm">Precision</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-8"
+            >
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  From Design to Reality
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Our state-of-the-art CNC equipment transforms your scrapbooking visions into perfectly cut reality, handling everything from simple shapes to complex intricate patterns with industrial precision.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-[#2563eb] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">1</div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">Design Analysis</h4>
+                    <p className="text-sm text-gray-600">We analyze your design for optimal cutting paths and material usage</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-[#2563eb] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">2</div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">Precision Setup</h4>
+                    <p className="text-sm text-gray-600">Material preparation and machine calibration for exact specifications</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-[#2563eb] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">3</div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">Quality Cutting</h4>
+                    <p className="text-sm text-gray-600">CNC execution with real-time monitoring for perfect results</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-[#2563eb] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4 mt-1">4</div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">Final Inspection</h4>
+                    <p className="text-sm text-gray-600">Thorough quality check before delivery to your project</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-[#E67E22] to-gray-800">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Create Your Masterpiece?
-          </h2>
-          <p className="text-xl text-gray-200 mb-8">
-            Let's bring your creative vision to life with our precision CNC cutting services
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-[#2C3E50] px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
-              Get Custom Quote Today
-              <HiOutlineArrowRight className="w-5 h-5" />
-            </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#2C3E50] transition-colors">
-              Call 095866 60214
-            </button>
-          </div>
+      {/* Statistics */}
+      <section className="py-12 sm:py-16 bg-[#1e40af]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            {...staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center"
+          >
+            <motion.div {...staggerItem} className="text-white">
+              <div className="text-3xl sm:text-4xl font-bold mb-2 text-[#f59e0b]">500+</div>
+              <div className="text-white/90">Projects Completed</div>
+            </motion.div>
+            <motion.div {...staggerItem} className="text-white">
+              <div className="text-3xl sm:text-4xl font-bold mb-2 text-[#f59e0b]">±0.1mm</div>
+              <div className="text-white/90">Cutting Precision</div>
+            </motion.div>
+            <motion.div {...staggerItem} className="text-white">
+              <div className="text-3xl sm:text-4xl font-bold mb-2 text-[#f59e0b]">24hr</div>
+              <div className="text-white/90">Quick Turnaround</div>
+            </motion.div>
+            <motion.div {...staggerItem} className="text-white">
+              <div className="text-3xl sm:text-4xl font-bold mb-2 text-[#f59e0b]">4.3★</div>
+              <div className="text-white/90">Customer Rating</div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
-    </main>
+
+      {/* CTA Section */}
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+              Ready to Start Your Custom Project?
+            </h2>
+            <p className="text-lg text-gray-600 mb-8">
+              Let's discuss your scrapbooking vision and create something amazing with precision CNC cutting technology.
+            </p>
+            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="bg-[#2563eb] text-white px-8 py-4 rounded-xl font-semibold shadow-lg"
+              >
+                Get Custom Quote Today
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                className="border-2 border-[#2563eb] text-[#2563eb] px-8 py-4 rounded-xl font-semibold hover:bg-[#2563eb] hover:text-white transition-colors duration-200"
+              >
+                View Our Services
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
   )
 }
