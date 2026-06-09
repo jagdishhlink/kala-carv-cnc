@@ -3,69 +3,80 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2';
+import { HiOutlineBars3, HiOutlineXMark, HiOutlinePhone } from 'react-icons/hi2';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'CNC Services', href: '/services' },
-    { name: 'Products', href: '/products' },
-    { name: 'Portfolio', href: '/portfolio' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' }
+    { label: 'Home', href: '/' },
+    { label: 'Products', href: '/products' },
+    { label: 'CNC Services', href: '/services' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
   ];
 
-  const isActive = (href) => pathname === href;
+  const isActiveLink = (href) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(href);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#2C3E50] shadow-sm">
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 lg:h-20 items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-[#2C3E50] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm lg:text-base">KC</span>
+            <div className="w-8 h-8 bg-[#2C3E50] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">KC</span>
             </div>
             <div>
-              <div className="text-lg lg:text-xl font-bold text-gray-900">Kala Carv CNC</div>
-              <div className="text-xs lg:text-sm text-[#2C3E50] font-medium">Precision Cutting</div>
+              <div className="text-gray-900 font-bold text-lg sm:text-xl">Kala Carv CNC</div>
+              <div className="text-[#2C3E50] text-xs sm:text-sm font-medium">Precision Cutting</div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
-                className={`px-3 lg:px-4 py-2 text-sm lg:text-base font-medium rounded-lg transition-colors ${
-                  isActive(item.href)
+                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  isActiveLink(item.href)
                     ? 'bg-[#2C3E50] text-white'
                     : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
-                {item.name}
+                {item.label}
               </Link>
             ))}
-          </div>
+          </nav>
 
           {/* Desktop Right Side */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
+            <a
+              href="tel:+919876543210"
+              className="flex items-center space-x-2 text-gray-700 hover:text-[#2C3E50] transition-colors"
+            >
+              <HiOutlinePhone className="w-4 h-4" />
+              <span className="text-sm font-medium">Call Now</span>
+            </a>
             <Link
               href="/contact"
-              className="bg-[#2C3E50] text-white px-4 lg:px-6 py-2 lg:py-2.5 text-sm lg:text-base font-medium rounded-lg hover:bg-[#34495e] transition-colors"
+              className="bg-[#2C3E50] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#34495e] transition-colors"
             >
-              Get Custom Quote
+              Get Quote
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="lg:hidden p-3 text-gray-700 hover:text-[#2C3E50] transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -76,39 +87,38 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation Panel */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t">
-            <div className="px-4 py-4 space-y-1">
+          <div className="lg:hidden border-t border-gray-200 bg-white">
+            <nav className="py-2">
               {navigation.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full px-4 py-3.5 text-base font-medium rounded-lg transition-colors ${
-                    isActive(item.href)
+                  className={`block px-4 py-3.5 text-sm font-medium transition-colors ${
+                    isActiveLink(item.href)
                       ? 'bg-[#2C3E50] text-white'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  {item.name}
+                  {item.label}
                 </Link>
               ))}
-              
-              {/* Mobile CTA Button */}
-              <div className="pt-4 border-t border-gray-200">
-                <Link
-                  href="/contact"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full bg-[#2C3E50] text-white text-center py-4 rounded-lg font-medium hover:bg-[#34495e] transition-colors"
-                >
-                  Get Custom Quote Today
-                </Link>
-              </div>
+            </nav>
+            <div className="px-4 py-3 border-t border-gray-200">
+              <a
+                href="tel:+919876543210"
+                className="flex items-center justify-center w-full bg-[#2C3E50] text-white py-3 rounded-lg font-medium hover:bg-[#34495e] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <HiOutlinePhone className="w-5 h-5 mr-2" />
+                Call Now
+              </a>
             </div>
           </div>
         )}
-      </nav>
+      </div>
     </header>
   );
 }
