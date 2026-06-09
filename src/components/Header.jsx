@@ -1,85 +1,74 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { HiOutlineBars3, HiOutlineXMark, HiOutlinePhone } from 'react-icons/hi2'
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { HiOutlineBars3, HiOutlineXMark } from 'react-icons/hi2';
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navigation = [
-    { label: 'Home', href: '/' },
-    { label: 'Services', href: '/services' },
-    { label: 'Portfolio', href: '/portfolio' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' }
-  ]
+    { name: 'Home', href: '/' },
+    { name: 'CNC Services', href: '/services' },
+    { name: 'Products', href: '/products' },
+    { name: 'Portfolio', href: '/portfolio' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' }
+  ];
 
-  const isActive = (href) => {
-    return pathname === href
-  }
+  const isActive = (href) => pathname === href;
 
   return (
-    <header className="fixed top-0 w-full bg-[#2C3E50] shadow-sm z-50">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#2C3E50] shadow-sm">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 lg:h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-[#2C3E50] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">KC</span>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">Kala Carv CNC</h1>
-                <p className="text-sm text-[#2C3E50] font-medium">Precision Cutting</p>
-              </div>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-[#2C3E50] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm lg:text-base">KC</span>
+            </div>
+            <div>
+              <div className="text-lg lg:text-xl font-bold text-gray-900">Kala Carv CNC</div>
+              <div className="text-xs lg:text-sm text-[#2C3E50] font-medium">Precision Cutting</div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navigation.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                className={`px-3 lg:px-4 py-2 text-sm lg:text-base font-medium rounded-lg transition-colors ${
                   isActive(item.href)
                     ? 'bg-[#2C3E50] text-white'
                     : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
-                {item.label}
+                {item.name}
               </Link>
             ))}
           </div>
 
-          {/* Desktop CTA */}
+          {/* Desktop Right Side */}
           <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="tel:+919123456789"
-              className="flex items-center space-x-2 text-gray-700 hover:text-[#2C3E50] transition-colors"
-            >
-              <HiOutlinePhone className="w-4 h-4" />
-              <span className="text-sm font-medium">Call Now</span>
-            </a>
             <Link
               href="/contact"
-              className="bg-[#2C3E50] text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#34495E] transition-colors duration-200"
+              className="bg-[#2C3E50] text-white px-4 lg:px-6 py-2 lg:py-2.5 text-sm lg:text-base font-medium rounded-lg hover:bg-[#34495e] transition-colors"
             >
-              Get Quote
+              Get Custom Quote
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? (
+            {isMenuOpen ? (
               <HiOutlineXMark className="w-6 h-6" />
             ) : (
               <HiOutlineBars3 className="w-6 h-6" />
@@ -87,40 +76,39 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
-            <div className="py-4 space-y-1">
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t">
+            <div className="px-4 py-4 space-y-1">
               {navigation.map((item) => (
                 <Link
-                  key={item.href}
+                  key={item.name}
                   href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-3.5 rounded-lg text-base font-medium transition-colors duration-200 ${
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block w-full px-4 py-3.5 text-base font-medium rounded-lg transition-colors ${
                     isActive(item.href)
                       ? 'bg-[#2C3E50] text-white'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  {item.label}
+                  {item.name}
                 </Link>
               ))}
               
-              {/* Mobile CTA */}
-              <div className="pt-4 space-y-3">
-                <a
-                  href="tel:+919123456789"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center space-x-2 w-full bg-[#2C3E50] text-white py-4 rounded-lg text-base font-semibold hover:bg-[#34495E] transition-colors duration-200"
+              {/* Mobile CTA Button */}
+              <div className="pt-4 border-t border-gray-200">
+                <Link
+                  href="/contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full bg-[#2C3E50] text-white text-center py-4 rounded-lg font-medium hover:bg-[#34495e] transition-colors"
                 >
-                  <HiOutlinePhone className="w-5 h-5" />
-                  <span>Call Now</span>
-                </a>
+                  Get Custom Quote Today
+                </Link>
               </div>
             </div>
           </div>
         )}
       </nav>
     </header>
-  )
+  );
 }
